@@ -5,6 +5,7 @@ import '../../../entities/finance/finance.dart';
 import '../../../entities/outgoing/outgoing.dart';
 import '../../../usercase/qr_code.dart';
 import '../../../usercase/transitions_builder.dart';
+import '../../../widgets/app_bar_widgets.dart';
 import '../../../widgets/bottom_navigation_bar_widget.dart';
 import '../../home/componet/list_outgoing.dart';
 import '../../outgoing_add/page/outgoing_insert_page.dart';
@@ -27,18 +28,9 @@ class _OutgoingPageState extends State<OutgoingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xffffffff),
-        elevation: 0,
-        title: const Text(
-          'Despesa',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w300,
-            color: Colors.black87,
-          ),
-        ),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBarWidgets(label: 'Despesa'),
       ),
       body: SingleChildScrollView(
         child: Padding(

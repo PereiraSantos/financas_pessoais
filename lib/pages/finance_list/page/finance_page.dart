@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../entities/finance/finance.dart';
 import '../../../usercase/format_date.dart';
 import '../../../usercase/transitions_builder.dart';
+import '../../../widgets/app_bar_widgets.dart';
 import '../../../widgets/bottom_navigation_bar_widget.dart';
 import '../../finance_add/page/finance_insert_page.dart';
 import '../controller/finance_list_controller.dart';
@@ -23,18 +24,9 @@ class _FinancePageState extends State<FinancePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xffffffff),
-        elevation: 0,
-        title: const Text(
-          'Finança',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w300,
-            color: Colors.black87,
-          ),
-        ),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBarWidgets(label: 'Finança'),
       ),
       body: SingleChildScrollView(
         child: Padding(
