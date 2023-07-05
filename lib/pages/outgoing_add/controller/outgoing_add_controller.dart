@@ -37,7 +37,7 @@ class OutgoingAddController {
   void setColor(int value) => color = value;
 
   Future<bool> validateInput(int? id, BuildContext context) async {
-    if (depesasController.currentState!.validate()) {
+    if (depesasController.currentState!.validate() && idFinance != null) {
       id != null
           ? await updateOutgoing(id, context)
           : await insertOutgoing(context);

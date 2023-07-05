@@ -7,10 +7,14 @@ import '../../category_add/page/category_insert_page.dart';
 import '../controller/category_list_controller.dart';
 
 class ListCategoriy extends StatelessWidget {
-  ListCategoriy({super.key, this.onFinish});
-  final Function()? onFinish;
-  final CategoryListController categoryListController =
-      CategoryListController();
+  const ListCategoriy(
+      {super.key,
+      required this.onFinish,
+      required this.onClickDelete,
+      required this.categoryListController});
+  final Function() onFinish;
+  final Function(int id) onClickDelete;
+  final CategoryListController categoryListController;
 
   @override
   Widget build(BuildContext context) {
@@ -35,44 +39,133 @@ class ListCategoriy extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 4,
-                          color: ColorCategory.getColor(
-                              snapshot.data![index].color ?? 0),
-                          child: InkWell(
-                            onTap: () async {
-                              Category? category = await categoryListController
-                                  .getCategoryById(snapshot.data![index].id!);
-
-                              // ignore: use_build_context_synchronously
-                              var result = await Navigator.of(context).push(
-                                TransitionsBuilder.createRoute(
-                                  CategoryInsertPage(category: category),
-                                ),
-                              );
-
-                              if (result) onFinish;
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                top: 2,
-                                left: 5,
-                                right: 5,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    alignment: Alignment.topLeft,
-                                    padding: const EdgeInsets.all(5),
-                                    child: Text(
-                                      'Descrição: ${snapshot.data![index].description}',
+                        return Dismissible(
+                          key: UniqueKey(),
+                          confirmDismiss: (DismissDirection direction) async {
+                            if (direction == DismissDirection.startToEnd) {
+                              return await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    content: Text(
+                                      "Deseja excluir? \n${snapshot.data![index].description}",
                                       style: const TextStyle(
-                                          fontSize: 18, color: Colors.black54),
+                                          color: Colors.black45, fontSize: 20),
                                     ),
+                                    actions: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10.0, right: 15.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            TextButton(
+                                              onPressed: () => onClickDelete(
+                                                  snapshot.data![index].id!),
+                                              style: ButtonStyle(
+                                                side: MaterialStateProperty.all(
+                                                  const BorderSide(
+                                                      width: 2,
+                                                      color: Color.fromARGB(
+                                                          80, 0, 0, 0)),
+                                                ),
+                                                foregroundColor:
+                                                    MaterialStateProperty.all(
+                                                        const Color.fromARGB(
+                                                            80, 0, 0, 0)),
+                                                padding:
+                                                    MaterialStateProperty.all(
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10,
+                                                      horizontal: 40),
+                                                ),
+                                                textStyle:
+                                                    MaterialStateProperty.all(
+                                                  const TextStyle(fontSize: 18),
+                                                ),
+                                              ),
+                                              child: const Text("SIM"),
+                                            ),
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, false),
+                                              style: ButtonStyle(
+                                                side: MaterialStateProperty.all(
+                                                  const BorderSide(
+                                                      width: 2,
+                                                      color: Color.fromARGB(
+                                                          80, 0, 0, 0)),
+                                                ),
+                                                foregroundColor:
+                                                    MaterialStateProperty.all(
+                                                        const Color.fromARGB(
+                                                            80, 0, 0, 0)),
+                                                padding:
+                                                    MaterialStateProperty.all(
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10,
+                                                      horizontal: 40),
+                                                ),
+                                                textStyle:
+                                                    MaterialStateProperty.all(
+                                                  const TextStyle(fontSize: 18),
+                                                ),
+                                              ),
+                                              child: const Text("NÃO"),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                            return null;
+                          },
+                          child: Card(
+                            elevation: 4,
+                            color: ColorCategory.getColor(
+                                snapshot.data![index].color ?? 0),
+                            child: InkWell(
+                              onTap: () async {
+                                Category? category =
+                                    await categoryListController
+                                        .getCategoryById(
+                                            snapshot.data![index].id!);
+
+                                // ignore: use_build_context_synchronously
+                                var result = await Navigator.of(context).push(
+                                  TransitionsBuilder.createRoute(
+                                    CategoryInsertPage(category: category),
                                   ),
-                                ],
+                                );
+
+                                if (result) onFinish;
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 2,
+                                  left: 5,
+                                  right: 5,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      alignment: Alignment.topLeft,
+                                      padding: const EdgeInsets.all(5),
+                                      child: Text(
+                                        'Descrição: ${snapshot.data![index].description}',
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.black54),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

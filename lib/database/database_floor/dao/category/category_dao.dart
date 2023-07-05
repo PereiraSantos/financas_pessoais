@@ -14,6 +14,9 @@ abstract class CategoryDao {
       'UPDATE category set description = :description, color = :color where id = :id')
   Future<Category?> updateCategoryById(String description, int color, int id);
 
+  @Query('delete FROM category WHERE id = :id')
+  Future<void> deleteCategoryById(int id);
+
   @insert
   Future<int> insertCategory(Category category);
 }

@@ -24,6 +24,9 @@ abstract class FinanceDao {
   @Query('UPDATE finance set value = :value where id = :id')
   Future<void> updateDateFinance(double value, int id);
 
+  @Query('delete FROM finance WHERE id = :id')
+  Future<void> deleteFinanceById(int id);
+
   @insert
   Future<int> insertFinance(Finance finance);
 }

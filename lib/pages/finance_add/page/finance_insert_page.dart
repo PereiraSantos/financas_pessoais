@@ -5,10 +5,9 @@ import 'package:financas_pessoais/entities/finance/finance.dart';
 import '../../../usercase/currency_input_formatter.dart';
 import '../../../usercase/date_mask.dart';
 import '../../../usercase/format_date.dart';
+import '../../../widgets/app_bar_widgets.dart';
 import '../../../widgets/text_button_widget.dart';
 import '../../../widgets/text_form_field_widget.dart';
-import '../component/checkbox_custom.dart';
-import '../component/message_user.dart';
 import '../controller/finance_insert_controller.dart';
 
 // ignore: must_be_immutable
@@ -23,8 +22,12 @@ class FinanceInsertPage extends StatelessWidget {
     if (finance != null) {
       financeInsertController.textControllerValorFinanca.text =
           Format.currentFormat(finance!.value!.toString());
-      financeInsertController.textControllerValorPoupar.text =
-          Format.currentFormat(finance!.valueSave!.toString());
+
+      if (finance!.valueSave! > 0.0) {
+        financeInsertController.textControllerValorPoupar.text =
+            Format.currentFormat(finance!.valueSave!.toString());
+      }
+
       financeInsertController.textControllerDataFinanca.text =
           finance!.dateStart!.toString();
     }
@@ -36,15 +39,11 @@ class FinanceInsertPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xffffffff),
-        elevation: 0,
-        title: const Text(
-          "Nova finança",
-          style: TextStyle(
-              fontSize: 20, color: Colors.black54, fontWeight: FontWeight.bold),
-        ),
+      backgroundColor: const Color(0xffffffff),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60.0),
+        child: AppBarWidgets(
+            label: finance != null ? "Editar finança" : "Nova finança"),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -53,7 +52,6 @@ class FinanceInsertPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const MessageUser(),
               TextFormFieldWidget(
                 controller: financeInsertController.textControllerValorFinanca,
                 hintText: 'Valor',
@@ -105,9 +103,33 @@ class FinanceInsertPage extends StatelessWidget {
                   ),
                 ),
               ),
-              CkechBoxCustom(checkbox: (value) {
-                financeInsertController.repeat = value;
-              }),
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: GestureDetector(
+                  onTap: () async {
+                    bool result = await financeInsertController
+                        .duplicateFinance(context, finance);
+                    if (result) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context, true);
+                    }
+                  },
+                  child: Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(80),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.only(
+                          left: 10.0, right: 10.0, top: 3, bottom: 3),
+                      child: Text(
+                        '+ Duplicar finança',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

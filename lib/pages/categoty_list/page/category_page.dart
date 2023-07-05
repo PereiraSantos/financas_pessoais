@@ -1,3 +1,4 @@
+import 'package:financas_pessoais/pages/categoty_list/controller/category_list_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widgets/app_bar_widgets.dart';
@@ -16,6 +17,8 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  CategoryListController categoryListController = CategoryListController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +27,14 @@ class _CategoryPageState extends State<CategoryPage> {
         preferredSize: Size.fromHeight(60.0),
         child: AppBarWidgets(label: 'Categoria'),
       ),
-      body: ListCategoriy(onFinish: () => setState(() {})),
+      body: ListCategoriy(
+          onFinish: () => setState(() {}),
+          onClickDelete: (int id) {
+            categoryListController.deteleCategoryById(context, id);
+            Navigator.pop(context);
+            setState(() {});
+          },
+          categoryListController: categoryListController),
       floatingActionButton: AddCategoriyButton(onFinish: () => setState(() {})),
       bottomNavigationBar: BottomNavigationBarWidget(index: widget.index),
     );

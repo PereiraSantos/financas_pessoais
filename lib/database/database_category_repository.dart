@@ -22,4 +22,8 @@ class DataBaseCategoryRepository {
   Future<int> insertCategory(Category category) async {
     return await database.insertCategory(category);
   }
+
+  Future<void> deleteCategoryById(int id) async {
+    return await database.deleteCategoryById(id);
+  }
 }

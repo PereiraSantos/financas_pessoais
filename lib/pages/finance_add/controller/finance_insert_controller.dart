@@ -11,20 +11,9 @@ class FinanceInsertController {
   final textControllerValorFinanca = TextEditingController();
   final textControllerDataFinanca = TextEditingController();
   final textControllerValorPoupar = TextEditingController();
-  bool repeat = false;
 
   DataBaseFinanceRepository dataBaseFinanceRepository =
       DataBaseFinanceRepository(DatabaseFinanceFloor());
-
-  Future<Finance?> getFinance(int? idFinance) async {
-    return idFinance != null
-        ? await dataBaseFinanceRepository.findFinanceById(idFinance)
-        : await dataBaseFinanceRepository.findLastAll();
-  }
-
-  Future<List<Finance>> getFinanceAll() async {
-    return await dataBaseFinanceRepository.findAll();
-  }
 
   Future<bool> validateInput(int? id, BuildContext context) async {
     if (financaControlller.currentState!.validate()) {
@@ -36,6 +25,13 @@ class FinanceInsertController {
     } else {
       return Future.value(false);
     }
+  }
+
+  Future<bool> duplicateFinance(BuildContext context, Finance? finance) async {
+    textControllerValorFinanca.text = finance?.value.toString() ?? '';
+    textControllerValorPoupar.text = finance?.valueSave.toString() ?? '';
+    initDate();
+    return await validateInput(null, context);
   }
 
   Future<void> insertFinance(BuildContext context, int? idFinance) async {
@@ -55,12 +51,6 @@ class FinanceInsertController {
       await dataBaseFinanceRepository
           .insertFinance(finance)
           .whenComplete(() => message(context, "Registrado com sucesso!!!"));
-
-      /* if (idFinance != null) {
-        await dataBaseFinanceRepository.updateDateFinanceById(
-            Format.formatDate(Format.dateParse(textControllerDataFinanca.text)),
-            idFinance);
-      }*/
     } catch (e) {
       log(e.toString());
     }
@@ -83,7 +73,6 @@ class FinanceInsertController {
       value: preparaValor(textControllerValorFinanca.text),
       valueSave: preparaValor(textControllerValorPoupar.text),
       dateStart: textControllerDataFinanca.text,
-      repeat: repeat,
       active: true,
     );
   }

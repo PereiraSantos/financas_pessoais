@@ -89,7 +89,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `finance` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `value` REAL, `date_start` TEXT, `date_finish` TEXT, `value_save` REAL, `active` INTEGER, `repeat` INTEGER)');
+            'CREATE TABLE IF NOT EXISTS `finance` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `value` REAL, `date_start` TEXT, `date_finish` TEXT, `value_save` REAL, `active` INTEGER)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `outgoing` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `description` TEXT, `value` REAL, `date` TEXT, `color` INTEGER, `id_finance` INTEGER)');
         await database.execute(
@@ -131,8 +131,7 @@ class _$FinanceDao extends FinanceDao {
                   'date_start': item.dateStart,
                   'date_finish': item.dateFinish,
                   'value_save': item.valueSave,
-                  'active': item.active == null ? null : (item.active! ? 1 : 0),
-                  'repeat': item.repeat == null ? null : (item.repeat! ? 1 : 0)
+                  'active': item.active == null ? null : (item.active! ? 1 : 0)
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -152,7 +151,6 @@ class _$FinanceDao extends FinanceDao {
             dateStart: row['date_start'] as String?,
             dateFinish: row['date_finish'] as String?,
             valueSave: row['value_save'] as double?,
-            repeat: row['repeat'] == null ? null : (row['repeat'] as int) != 0,
             active:
                 row['active'] == null ? null : (row['active'] as int) != 0));
   }
@@ -166,7 +164,6 @@ class _$FinanceDao extends FinanceDao {
             dateStart: row['date_start'] as String?,
             dateFinish: row['date_finish'] as String?,
             valueSave: row['value_save'] as double?,
-            repeat: row['repeat'] == null ? null : (row['repeat'] as int) != 0,
             active:
                 row['active'] == null ? null : (row['active'] as int) != 0));
   }
@@ -180,7 +177,6 @@ class _$FinanceDao extends FinanceDao {
             dateStart: row['date_start'] as String?,
             dateFinish: row['date_finish'] as String?,
             valueSave: row['value_save'] as double?,
-            repeat: row['repeat'] == null ? null : (row['repeat'] as int) != 0,
             active: row['active'] == null ? null : (row['active'] as int) != 0),
         arguments: [id]);
   }
@@ -195,7 +191,6 @@ class _$FinanceDao extends FinanceDao {
             dateStart: row['date_start'] as String?,
             dateFinish: row['date_finish'] as String?,
             valueSave: row['value_save'] as double?,
-            repeat: row['repeat'] == null ? null : (row['repeat'] as int) != 0,
             active:
                 row['active'] == null ? null : (row['active'] as int) != 0));
   }
@@ -214,7 +209,6 @@ class _$FinanceDao extends FinanceDao {
             dateStart: row['date_start'] as String?,
             dateFinish: row['date_finish'] as String?,
             valueSave: row['value_save'] as double?,
-            repeat: row['repeat'] == null ? null : (row['repeat'] as int) != 0,
             active: row['active'] == null ? null : (row['active'] as int) != 0),
         arguments: [dateFinish, active ? 1 : 0, id]);
   }
@@ -227,6 +221,12 @@ class _$FinanceDao extends FinanceDao {
     await _queryAdapter.queryNoReturn(
         'UPDATE finance set value = ?1 where id = ?2',
         arguments: [value, id]);
+  }
+
+  @override
+  Future<void> deleteFinanceById(int id) async {
+    await _queryAdapter
+        .queryNoReturn('delete FROM finance WHERE id = ?1', arguments: [id]);
   }
 
   @override
@@ -417,6 +417,12 @@ class _$CategoryDao extends CategoryDao {
             color: row['color'] as int?,
             icon: row['icon'] as String?),
         arguments: [description, color, id]);
+  }
+
+  @override
+  Future<void> deleteCategoryById(int id) async {
+    await _queryAdapter
+        .queryNoReturn('delete FROM category WHERE id = ?1', arguments: [id]);
   }
 
   @override

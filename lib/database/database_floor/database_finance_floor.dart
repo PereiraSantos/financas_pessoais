@@ -11,6 +11,7 @@ abstract class IDatabaseFinance {
       String dateFinish, bool active, int id);
   Future<int> insertFinance(Finance finance);
   Future<void> updateFinance(double value, int id);
+  Future<void> deleteFinanceById(int id);
 }
 
 class DatabaseFinanceFloor implements IDatabaseFinance {
@@ -60,9 +61,13 @@ class DatabaseFinanceFloor implements IDatabaseFinance {
     return await _database!.financeDao.updateDateFinance(value, id);
   }
 
+  @override
+  Future<void> deleteFinanceById(int id) async {
+    await validInstanceDataBase();
+    return await _database!.financeDao.deleteFinanceById(id);
+  }
+
   Future<void> validInstanceDataBase() async {
     _database ??= await InstanceFloor().getInstance();
   }
 }
-
-//

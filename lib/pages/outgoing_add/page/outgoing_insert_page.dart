@@ -10,6 +10,7 @@ import '../../../usercase/currency_input_formatter.dart';
 import '../../../usercase/date_mask.dart';
 
 import '../../../usercase/transitions_builder.dart';
+import '../../../widgets/app_bar_widgets.dart';
 import '../../../widgets/text_button_widget.dart';
 import '../../../widgets/text_form_field_widget.dart';
 import '../../categoty_list/controller/category_list_controller.dart';
@@ -42,15 +43,11 @@ class OutgoingInsertPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xffffffff),
-        elevation: 0,
-        title: Text(
-          outgoing != null ? "Editar despesa" : "Nova despesa",
-          style: const TextStyle(
-              fontSize: 20, color: Colors.black54, fontWeight: FontWeight.bold),
-        ),
+      backgroundColor: const Color(0xffffffff),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60.0),
+        child: AppBarWidgets(
+            label: outgoing != null ? "Editar despesa" : "Nova despesa"),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -112,49 +109,70 @@ class OutgoingInsertPage extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 20.0, top: 30),
                       child: SizedBox(
                         width: double.maxFinite,
-                        child: Row(
+                        child: Column(
                           children: [
-                            const Expanded(
-                              child: Text(
-                                "Não há finança",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w300, fontSize: 15),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                width: double.maxFinite,
-                                alignment: Alignment.centerRight,
-                                padding: const EdgeInsets.only(right: 15),
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    await Navigator.of(context).push(
-                                      TransitionsBuilder.createRoute(
-                                        const CategoryPage(index: 2),
-                                      ),
-                                    );
-                                  },
-                                  child: Card(
-                                    elevation: 10,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(80),
-                                    ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 10.0,
-                                          right: 10.0,
-                                          top: 3,
-                                          bottom: 3),
-                                      child: Text(
-                                        '+ Adicionar nova finança',
-                                        style: TextStyle(fontSize: 14),
+                            Row(
+                              children: [
+                                const Expanded(
+                                  child: Text(
+                                    "Não há finança",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 15),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    width: double.maxFinite,
+                                    alignment: Alignment.centerRight,
+                                    padding: const EdgeInsets.only(right: 15),
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        await Navigator.of(context).push(
+                                          TransitionsBuilder.createRoute(
+                                            const CategoryPage(index: 2),
+                                          ),
+                                        );
+                                      },
+                                      child: Card(
+                                        elevation: 10,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(80),
+                                        ),
+                                        child: const Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 10.0,
+                                              right: 10.0,
+                                              top: 3,
+                                              bottom: 3),
+                                          child: Text(
+                                            '+ Adicionar nova finança',
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
+                            Visibility(
+                              visible: outgoingAddController.idFinance == null
+                                  ? true
+                                  : false,
+                              child: const SizedBox(
+                                width: double.maxFinite,
+                                child: Text(
+                                  "Campo obrigatório!!!",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      color: Color.fromARGB(255, 219, 19, 5)),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),

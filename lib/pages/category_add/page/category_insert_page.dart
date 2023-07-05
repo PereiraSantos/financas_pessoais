@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:financas_pessoais/entities/category/category.dart';
+import '../../../widgets/app_bar_widgets.dart';
 import '../../../widgets/text_button_widget.dart';
 import '../../../widgets/text_form_field_widget.dart';
 import '../component/color_category.dart';
@@ -23,15 +24,11 @@ class CategoryInsertPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xffffffff),
-        elevation: 0,
-        title: const Text(
-          "Nova Categoria",
-          style: TextStyle(
-              fontSize: 20, color: Colors.black54, fontWeight: FontWeight.bold),
-        ),
+      backgroundColor: const Color(0xffffffff),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60.0),
+        child: AppBarWidgets(
+            label: category != null ? "Editar Categoria" : "Nova Categoria"),
       ),
       body: SingleChildScrollView(
         child: Form(

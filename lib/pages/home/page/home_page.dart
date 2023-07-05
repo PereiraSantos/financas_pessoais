@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:financas_pessoais/entities/finance/finance.dart';
-import 'package:financas_pessoais/pages/home/page/graphic.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 import '../../../entities/outgoing/outgoing.dart';
@@ -8,8 +7,8 @@ import '../../../usercase/format_date.dart';
 import '../../../usercase/qr_code.dart';
 import '../../../usercase/transitions_builder.dart';
 import '../../../widgets/bottom_navigation_bar_widget.dart';
-import '../../finance_add/controller/finance_insert_controller.dart';
 import '../../finance_add/page/finance_insert_page.dart';
+import '../../finance_list/controller/finance_list_controller.dart';
 import '../../outgoing_add/controller/outgoing_add_controller.dart';
 import '../../outgoing_list/outigoing_list_controller/outgoing_list_controller.dart';
 import '../../outgoing_add/page/outgoing_insert_page.dart';
@@ -34,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   void reloadPage() => setState(() {});
 
   Future<Finance?> findFinanceHomePage() async {
-    finance = await FinanceInsertController().getFinance(null);
+    finance = await FinaceListController().getFinance(null);
 
     if (finance != null) {
       List<Outgoing> list = await outgoingListController
@@ -199,7 +198,7 @@ class _HomePageState extends State<HomePage> {
               ),
               text('Últimas despesas', 18, top: 20),
               FutureBuilder(
-                future: FinanceInsertController().getFinance(null),
+                future: FinaceListController().getFinance(null),
                 builder:
                     (BuildContext context, AsyncSnapshot<Finance?> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {

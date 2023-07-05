@@ -21,16 +21,12 @@ class Finance {
   @ColumnInfo(name: 'active')
   bool? active;
 
-  @ColumnInfo(name: 'repeat')
-  bool? repeat;
-
   Finance({
     this.id,
     this.value,
     this.dateStart,
     this.dateFinish,
     this.valueSave,
-    this.repeat,
     this.active,
   });
 }

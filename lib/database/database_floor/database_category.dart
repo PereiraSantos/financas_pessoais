@@ -7,6 +7,7 @@ abstract class IDatabaseCategory {
   Future<Category?> findCategoryById(int id);
   Future<Category?> updateCategoryById(String description, int color, int id);
   Future<int> insertCategory(Category finance);
+  Future<void> deleteCategoryById(int id);
 }
 
 class DatabaseCategoryFloor implements IDatabaseCategory {
@@ -36,6 +37,12 @@ class DatabaseCategoryFloor implements IDatabaseCategory {
   Future<int> insertCategory(Category category) async {
     await validInstanceDataBase();
     return await _database!.categoryDao.insertCategory(category);
+  }
+
+  @override
+  Future<void> deleteCategoryById(int id) async {
+    await validInstanceDataBase();
+    return await _database!.categoryDao.deleteCategoryById(id);
   }
 
   Future<void> validInstanceDataBase() async {

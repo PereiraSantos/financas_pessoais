@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../entities/category/category.dart';
 import '../../../entities/finance/finance.dart';
 import '../../../usercase/format_date.dart';
-import '../../outgoing_list/outigoing_list_controller/outgoing_list_controller.dart';
 import '../controller/outgoing_add_controller.dart';
 
 // ignore: must_be_immutable

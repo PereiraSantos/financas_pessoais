@@ -28,7 +28,7 @@ class ListOutgoing extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: idFinance == -1
-          ? controller.getOutgoingAll() //findAllIdFinance
+          ? controller.getOutgoingAll()
           : controller.getOutgoingLast(value: search, idFinance: idFinance),
       builder: (BuildContext context, AsyncSnapshot<List<Outgoing>> snapshot) {
         if (!snapshot.hasData &&

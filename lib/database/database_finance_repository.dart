@@ -34,4 +34,8 @@ class DataBaseFinanceRepository {
   Future<void> updateFinance(double value, int id) async {
     return await database.updateFinance(value, id);
   }
+
+  Future<void> removeFinanceById(int id) async {
+    return await database.deleteFinanceById(id);
+  }
 }
