@@ -23,13 +23,9 @@ abstract class OutgoingDao {
   Future<Outgoing?> findOutgoingById(int id);
 
   @Query(
-      'update outgoing set description = :description,  value = :value, date = :date WHERE id = :id')
-  Future<void> updateOutgoing(
-    String description,
-    double value,
-    String date,
-    int id,
-  );
+      'update outgoing set description = :description,  value = :value, date = :date, id_category = :idCategory,  id_finance = :idFinance WHERE id = :id')
+  Future<void> updateOutgoing(String description, double value, String date,
+      int id, int idCategory, int idFinance);
 
   @insert
   Future<int> insertOutgoing(Outgoing outgoing);

@@ -44,7 +44,7 @@ class ListOutgoing extends StatelessWidget {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 return Dismissible(
-                  key: UniqueKey(),
+                  key: Key('${snapshot.data![index].id}'),
                   confirmDismiss: (DismissDirection direction) async {
                     if (direction == DismissDirection.startToEnd) {
                       return await showDialog(
@@ -52,7 +52,7 @@ class ListOutgoing extends StatelessWidget {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             content: Text(
-                              "Deseja excluir? \n${Format.currentFormat(snapshot.data![index].value!)}",
+                              "Deseja excluir? \n${Format.currentFormat(snapshot.data![index].description!)}",
                               style: const TextStyle(
                                   color: Colors.black45, fontSize: 20),
                             ),
@@ -129,7 +129,7 @@ class ListOutgoing extends StatelessWidget {
                       child: FutureBuilder(
                           future: controller.categoryRepository
                               .findCategoryById(
-                                  snapshot.data![index].color ?? -1),
+                                  snapshot.data![index].idCategory ?? -1),
                           builder: (BuildContext context,
                               AsyncSnapshot<Category?> snapshotCategory) {
                             if (!snapshot.hasData &&
@@ -178,11 +178,11 @@ class ListOutgoing extends StatelessWidget {
                                             padding: const EdgeInsets.only(
                                                 top: 5, left: 05, bottom: 08),
                                             child: Visibility(
-                                              visible:
-                                                  snapshot.data?[index].color !=
-                                                          0
-                                                      ? true
-                                                      : false,
+                                              visible: snapshot.data?[index]
+                                                          .idCategory !=
+                                                      0
+                                                  ? true
+                                                  : false,
                                               child: Text(
                                                 "Categoria: ${snapshotCategory.data?.description ?? 'Padrão'}",
                                                 style: const TextStyle(

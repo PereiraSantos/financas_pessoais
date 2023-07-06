@@ -15,8 +15,8 @@ class Outgoing {
   @ColumnInfo(name: 'date')
   String? date;
 
-  @ColumnInfo(name: 'color')
-  int? color;
+  @ColumnInfo(name: 'id_category')
+  int? idCategory;
 
   @ColumnInfo(name: 'id_finance')
   int? idFinance;
@@ -26,7 +26,7 @@ class Outgoing {
     this.description,
     this.value,
     this.date,
-    this.color,
+    this.idCategory,
     this.idFinance,
   });
 }

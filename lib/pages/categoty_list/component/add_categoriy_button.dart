@@ -4,9 +4,9 @@ import '../../../usercase/transitions_builder.dart';
 import '../../category_add/page/category_insert_page.dart';
 
 class AddCategoriyButton extends StatelessWidget {
-  const AddCategoriyButton({super.key, this.onFinish});
+  const AddCategoriyButton({super.key, required this.onFinish});
 
-  final Function()? onFinish;
+  final Function() onFinish;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class AddCategoriyButton extends StatelessWidget {
           ),
         );
 
-        if (result) onFinish;
+        if (result) onFinish();
       },
       child: Card(
         elevation: 10,

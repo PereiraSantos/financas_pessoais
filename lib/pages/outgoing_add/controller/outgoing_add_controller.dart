@@ -16,7 +16,7 @@ class OutgoingAddController {
 
   int? idFinance;
   List<Finance> finance = [];
-  int color = 0;
+  int? idCategory;
   List<Category> category = [];
 
   DatabaseOutgoingRepository databaseOutgoingRepository =
@@ -34,7 +34,7 @@ class OutgoingAddController {
     setColor(element[0].id!);
   }
 
-  void setColor(int value) => color = value;
+  void setColor(int value) => idCategory = value;
 
   Future<bool> validateInput(int? id, BuildContext context) async {
     if (depesasController.currentState!.validate() && idFinance != null) {
@@ -63,7 +63,9 @@ class OutgoingAddController {
             textControllerDescricaoDespesa.text,
             preparaValor(textControllerValorDespesa.text),
             textControllerDataDespesa.text,
-            id)
+            id,
+            idCategory ?? 0,
+            idFinance!)
         .whenComplete(() => message(context, "Atualizado com sucesso!!!"));
   }
 
@@ -76,12 +78,11 @@ class OutgoingAddController {
 
   Outgoing buildOutgoing() {
     return Outgoing(
-      date: textControllerDataDespesa.text,
-      description: textControllerDescricaoDespesa.text,
-      idFinance: idFinance,
-      value: preparaValor(textControllerValorDespesa.text),
-      color: color,
-    );
+        date: textControllerDataDespesa.text,
+        description: textControllerDescricaoDespesa.text,
+        idFinance: idFinance,
+        value: preparaValor(textControllerValorDespesa.text),
+        idCategory: idCategory);
   }
 
   double preparaValor(value) {

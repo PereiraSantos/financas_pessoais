@@ -38,8 +38,9 @@ class DatabaseOutgoingRepository {
     return database.insertOutgoingList(outgoing);
   }
 
-  Future<void> updateOutgoing(
-      String description, double value, String date, int id) async {
-    return await database.updateOutgoing(description, value, date, id);
+  Future<void> updateOutgoing(String description, double value, String date,
+      int id, int idCategory, int idFinance) async {
+    return await database.updateOutgoing(
+        description, value, date, id, idCategory, idFinance);
   }
 }

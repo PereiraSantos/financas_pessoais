@@ -6,7 +6,6 @@ import 'package:financas_pessoais/database/database_floor/database_finance_floor
 
 import '../../../database/database_floor/database_outgoing_floor.dart';
 import '../../../database/database_outgoing_repository.dart';
-import '../../../entities/category/category.dart';
 import '../../../entities/finance/finance.dart';
 import '../../../entities/outgoing/outgoing.dart';
 import '../../../usercase/format_date.dart';
@@ -55,83 +54,10 @@ class OutgoingListController {
   Future<Finance?> getFinanceDateFinishIsNull() async =>
       await dataBaseFinanceRepository.findFinanceDateFinishIsNull();
 
-  Future<bool> validateInput(int? id, BuildContext context) async {
-    if (depesasController.currentState!.validate()) {
-      Finance? finance = await getFinanceDateFinishIsNull();
-
-      if (finance == null) {
-        // ignore: use_build_context_synchronously
-        message(context, "Não há finanças cadastrada!!!");
-        return Future.value(false);
-      }
-      id != null
-          // ignore: use_build_context_synchronously
-          ? await updateOutgoing(id, context)
-          // ignore: use_build_context_synchronously
-          : await insertOutgoing(context, finance);
-
-      return await Future.value(true);
-    } else {
-      return Future.value(false);
-    }
-  }
-
-  Future<bool> insertByListOutgoing(
-      List<Outgoing> list, BuildContext context) async {
-    databaseOutgoingRepository
-        .insertOutgoingList(list)
-        .whenComplete(() => message(context, "Registrado com sucesso!!!"));
-
-    return Future.value(true);
-  }
-
-  Future<void> updateOutgoing(int id, BuildContext context) async {
-    await databaseOutgoingRepository
-        .updateOutgoing(
-            textControllerDescricaoDespesa.text,
-            preparaValor(textControllerValorDespesa.text),
-            textControllerDataDespesa.text,
-            id)
-        .whenComplete(() => message(context, "Atualizado com sucesso!!!"));
-  }
-
-  Future<void> insertOutgoing(BuildContext context, Finance finance) async {
-    final outgoing = buildOutgoing(finance);
-    await databaseOutgoingRepository
-        .insertOutgoing(outgoing)
-        .whenComplete(() => message(context, "Registrado com sucesso!!!"));
-  }
-
-  Outgoing buildOutgoing(Finance finance) {
-    return Outgoing(
-      date: textControllerDataDespesa.text,
-      description: textControllerDescricaoDespesa.text,
-      idFinance: finance.id,
-      value: preparaValor(textControllerValorDespesa.text),
-    );
-  }
-
-  double preparaValor(value) {
-    if (value.toString().length < 10) {
-      return double.parse(value.replaceAll("R\$", "").replaceAll(",", "."));
-    } else {
-      return double.parse(value
-          .replaceAll("R\$", "")
-          .replaceAll(".", "")
-          .replaceAll(",00", ".0"));
-    }
-  }
-
   Future<void> deleteOutgoing(int id, BuildContext context) async {
     databaseOutgoingRepository
         .deleteOutgoingById(id)
         .whenComplete(() => message(context, "Excluido com sucesso!!!"));
-  }
-
-  void updateValue(Outgoing outgoing) {
-    textControllerDescricaoDespesa.text = outgoing.description!;
-    textControllerDataDespesa.text = outgoing.date!;
-    textControllerValorDespesa.text = outgoing.value.toString();
   }
 
   void message(BuildContext context, String message) {

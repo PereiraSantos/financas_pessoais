@@ -10,8 +10,8 @@ abstract class IDatabaseOutgoing {
   Future<List<Outgoing>> findOutgoingDescription(String text);
   Future<void> deleteOutgoingById(int id);
   Future<Outgoing?> findOutgoingById(int id);
-  Future<void> updateOutgoing(
-      String description, double value, String date, int id);
+  Future<void> updateOutgoing(String description, double value, String date,
+      int id, int idCategory, int idFinance);
   Future<int> insertOutgoing(Outgoing outgoing);
   Future<void> insertOutgoingList(List<Outgoing> outgoing);
 }
@@ -68,11 +68,11 @@ class DatabaseOutgoingFloor implements IDatabaseOutgoing {
   }
 
   @override
-  Future<void> updateOutgoing(
-      String description, double value, String date, int id) async {
+  Future<void> updateOutgoing(String description, double value, String date,
+      int id, int idCategory, int idFinance) async {
     await validInstanceDataBase();
     return await _database!.outgoingDao
-        .updateOutgoing(description, value, date, id);
+        .updateOutgoing(description, value, date, id, idCategory, idFinance);
   }
 
   Future<void> validInstanceDataBase() async =>

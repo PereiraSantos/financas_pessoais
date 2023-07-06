@@ -46,7 +46,7 @@ class QrCode {
             value: listProductValue[i],
             idFinance: idFinance,
             date: Format.formatDate(DateTime.now()),
-            color: 0));
+            idCategory: 0));
       }
     }
 

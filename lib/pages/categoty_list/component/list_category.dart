@@ -40,7 +40,7 @@ class ListCategoriy extends StatelessWidget {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         return Dismissible(
-                          key: UniqueKey(),
+                          key: Key('${snapshot.data![index].id}'),
                           confirmDismiss: (DismissDirection direction) async {
                             if (direction == DismissDirection.startToEnd) {
                               return await showDialog(

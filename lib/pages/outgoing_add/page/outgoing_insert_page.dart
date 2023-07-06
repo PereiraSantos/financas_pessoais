@@ -1,3 +1,4 @@
+import 'package:financas_pessoais/pages/finance_add/page/finance_insert_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:financas_pessoais/entities/category/category.dart';
@@ -21,24 +22,36 @@ import '../component/dropdown_button_finance.dart';
 import '../controller/outgoing_add_controller.dart';
 
 // ignore: must_be_immutable
-class OutgoingInsertPage extends StatelessWidget {
+class OutgoingInsertPage extends StatefulWidget {
   OutgoingInsertPage({
     super.key,
     this.outgoing,
-  }) {
-    if (outgoing != null) {
-      outgoingAddController.updateValue(outgoing!);
+  });
+
+  Outgoing? outgoing;
+
+  @override
+  State<OutgoingInsertPage> createState() => _OutgoingInsertPageState();
+}
+
+class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
+  OutgoingAddController outgoingAddController = OutgoingAddController();
+
+  OutgoingListController outgoingListController = OutgoingListController();
+
+  CategoryListController listCategoryController = CategoryListController();
+
+  FinaceListController finaceListController = FinaceListController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.outgoing != null) {
+      outgoingAddController.updateValue(widget.outgoing!);
     } else {
       outgoingAddController.initDate();
     }
   }
-
-  OutgoingAddController outgoingAddController = OutgoingAddController();
-  OutgoingListController outgoingListController = OutgoingListController();
-  CategoryListController listCategoryController = CategoryListController();
-  FinaceListController finaceListController = FinaceListController();
-
-  Outgoing? outgoing;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +60,7 @@ class OutgoingInsertPage extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60.0),
         child: AppBarWidgets(
-            label: outgoing != null ? "Editar despesa" : "Nova despesa"),
+            label: widget.outgoing != null ? "Editar despesa" : "Nova despesa"),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -129,11 +142,14 @@ class OutgoingInsertPage extends StatelessWidget {
                                     padding: const EdgeInsets.only(right: 15),
                                     child: GestureDetector(
                                       onTap: () async {
-                                        await Navigator.of(context).push(
+                                        bool result =
+                                            await Navigator.of(context).push(
                                           TransitionsBuilder.createRoute(
-                                            const CategoryPage(index: 2),
+                                            FinanceInsertPage(),
                                           ),
                                         );
+
+                                        if (result) setState(() {});
                                       },
                                       child: Card(
                                         elevation: 10,
@@ -231,11 +247,14 @@ class OutgoingInsertPage extends StatelessWidget {
                                 padding: const EdgeInsets.only(right: 15),
                                 child: GestureDetector(
                                   onTap: () async {
-                                    await Navigator.of(context).push(
+                                    var result =
+                                        await Navigator.of(context).push(
                                       TransitionsBuilder.createRoute(
                                         const CategoryPage(index: 2),
                                       ),
                                     );
+
+                                    if (result) setState(() {});
                                   },
                                   child: Card(
                                     elevation: 10,
@@ -279,7 +298,7 @@ class OutgoingInsertPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 15.0),
                 child: TextFormFieldWidget(
                   controller: outgoingAddController.textControllerDataDespesa,
-                  readOnly: outgoing?.id != null ? true : false,
+                  readOnly: widget.outgoing?.id != null ? true : false,
                   inputFormatter: [DateMask()],
                   keyboardType: TextInputType.datetime,
                   suffixIcon: IconButton(
@@ -316,10 +335,10 @@ class OutgoingInsertPage extends StatelessWidget {
             TextButtonWidget(
                 label: 'CANCELA', onClick: () => Navigator.pop(context, false)),
             TextButtonWidget(
-              label: outgoing != null ? 'EDITAR' : 'SALVAR',
+              label: widget.outgoing != null ? 'EDITAR' : 'SALVAR',
               onClick: () async {
                 bool result = await outgoingAddController.validateInput(
-                    outgoing?.id, context);
+                    widget.outgoing?.id, context);
                 if (result) {
                   // ignore: use_build_context_synchronously
                   Navigator.pop(context, true);

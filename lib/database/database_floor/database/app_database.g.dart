@@ -91,7 +91,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `finance` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `value` REAL, `date_start` TEXT, `date_finish` TEXT, `value_save` REAL, `active` INTEGER)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `outgoing` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `description` TEXT, `value` REAL, `date` TEXT, `color` INTEGER, `id_finance` INTEGER)');
+            'CREATE TABLE IF NOT EXISTS `outgoing` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `description` TEXT, `value` REAL, `date` TEXT, `id_category` INTEGER, `id_finance` INTEGER)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `category` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `description` TEXT, `color` INTEGER, `icon` TEXT)');
 
@@ -249,7 +249,7 @@ class _$OutgoingDao extends OutgoingDao {
                   'description': item.description,
                   'value': item.value,
                   'date': item.date,
-                  'color': item.color,
+                  'id_category': item.idCategory,
                   'id_finance': item.idFinance
                 });
 
@@ -269,7 +269,7 @@ class _$OutgoingDao extends OutgoingDao {
             description: row['description'] as String?,
             value: row['value'] as double?,
             date: row['date'] as String?,
-            color: row['color'] as int?,
+            idCategory: row['id_category'] as int?,
             idFinance: row['id_finance'] as int?));
   }
 
@@ -282,7 +282,7 @@ class _$OutgoingDao extends OutgoingDao {
             description: row['description'] as String?,
             value: row['value'] as double?,
             date: row['date'] as String?,
-            color: row['color'] as int?,
+            idCategory: row['id_category'] as int?,
             idFinance: row['id_finance'] as int?),
         arguments: [idFinance]);
   }
@@ -296,7 +296,7 @@ class _$OutgoingDao extends OutgoingDao {
             description: row['description'] as String?,
             value: row['value'] as double?,
             date: row['date'] as String?,
-            color: row['color'] as int?,
+            idCategory: row['id_category'] as int?,
             idFinance: row['id_finance'] as int?),
         arguments: [idFinance]);
   }
@@ -310,7 +310,7 @@ class _$OutgoingDao extends OutgoingDao {
             description: row['description'] as String?,
             value: row['value'] as double?,
             date: row['date'] as String?,
-            color: row['color'] as int?,
+            idCategory: row['id_category'] as int?,
             idFinance: row['id_finance'] as int?),
         arguments: [text]);
   }
@@ -329,7 +329,7 @@ class _$OutgoingDao extends OutgoingDao {
             description: row['description'] as String?,
             value: row['value'] as double?,
             date: row['date'] as String?,
-            color: row['color'] as int?,
+            idCategory: row['id_category'] as int?,
             idFinance: row['id_finance'] as int?),
         arguments: [id]);
   }
@@ -340,10 +340,12 @@ class _$OutgoingDao extends OutgoingDao {
     double value,
     String date,
     int id,
+    int idCategory,
+    int idFinance,
   ) async {
     await _queryAdapter.queryNoReturn(
-        'update outgoing set description = ?1,  value = ?2, date = ?3 WHERE id = ?4',
-        arguments: [description, value, date, id]);
+        'update outgoing set description = ?1,  value = ?2, date = ?3, id_category = ?5,  id_finance = ?6 WHERE id = ?4',
+        arguments: [description, value, date, id, idCategory, idFinance]);
   }
 
   @override
