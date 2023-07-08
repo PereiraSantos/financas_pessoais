@@ -7,6 +7,7 @@ import '../../../entities/category/category.dart';
 class AddCategoryController {
   final categoryForm = GlobalKey<FormState>();
   TextEditingController description = TextEditingController();
+  TextEditingController emoji = TextEditingController();
   int color = 0;
 
   DataBaseCategoryRepository dataBaseCategoryRepository =
@@ -18,14 +19,27 @@ class AddCategoryController {
     if (categoryForm.currentState!.validate()) {
       id != null
           ? await dataBaseCategoryRepository.updateCategory(
-              description.text, color, id)
+              description.text,
+              emoji.text,
+              color,
+              id,
+            )
           : await dataBaseCategoryRepository.insertCategory(
-              Category(description: description.text, color: color),
+              Category(
+                description: description.text,
+                emoji: emoji.text,
+                color: color,
+              ),
             );
-
+      resetForm();
       return await Future.value(true);
     } else {
       return Future.value(false);
     }
+  }
+
+  resetForm() {
+    description.text = '';
+    emoji.text = '';
   }
 }

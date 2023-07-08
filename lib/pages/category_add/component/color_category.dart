@@ -44,6 +44,7 @@ class _ColorCategoryCustomState extends State<ColorCategoryCustom> {
             decoration: BoxDecoration(
               color: ColorCategory.getColor(index),
               border: Border.all(color: Colors.grey),
+              borderRadius: const BorderRadius.all(Radius.circular(2)),
             ),
             padding: const EdgeInsets.all(8),
           ),
@@ -62,6 +63,18 @@ class _ColorCategoryCustomState extends State<ColorCategoryCustom> {
     );
   }
 
+  buildWidget() {
+    List<Widget> list = [];
+
+    for (var i = 0; i < ColorCategory.cor.length; i++) {
+      if (i > 0) {
+        list.add(color(i));
+      }
+    }
+
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -73,14 +86,7 @@ class _ColorCategoryCustomState extends State<ColorCategoryCustom> {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         crossAxisCount: 6,
-        children: <Widget>[
-          color(1),
-          color(2),
-          color(3),
-          color(4),
-          color(5),
-          color(6),
-        ],
+        children: [...buildWidget()],
       ),
     );
   }

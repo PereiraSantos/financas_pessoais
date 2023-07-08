@@ -43,7 +43,18 @@ class _DropdownButtonState extends State<DropdownButtoncategory> {
             .map<DropdownMenuItem<Category>>((dynamic value) {
           return DropdownMenuItem<Category>(
             value: value,
-            child: Text(value.description!),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(flex: 2, child: Text(value.description!)),
+                Expanded(
+                    child: Text(
+                  value.emoji ?? '',
+                  style: const TextStyle(fontSize: 16),
+                  textAlign: TextAlign.right,
+                )),
+              ],
+            ),
           );
         }).toList(),
       ),

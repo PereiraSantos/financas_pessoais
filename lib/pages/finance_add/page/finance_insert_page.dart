@@ -21,11 +21,11 @@ class FinanceInsertPage extends StatelessWidget {
 
     if (finance != null) {
       financeInsertController.textControllerValorFinanca.text =
-          Format.currentFormat(finance!.value!.toString());
+          Format.currentFormat(finance!.value!);
 
       if (finance!.valueSave! > 0.0) {
         financeInsertController.textControllerValorPoupar.text =
-            Format.currentFormat(finance!.valueSave!.toString());
+            Format.currentFormat(finance!.valueSave!);
       }
 
       financeInsertController.textControllerDataFinanca.text =

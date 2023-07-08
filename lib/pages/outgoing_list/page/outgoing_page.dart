@@ -61,6 +61,7 @@ class _OutgoingPageState extends State<OutgoingPage> {
                   if (result) setState(() {});
                 },
               ),
+              const Padding(padding: EdgeInsets.only(bottom: 60))
             ],
           ),
         ),
@@ -111,14 +112,13 @@ class _OutgoingPageState extends State<OutgoingPage> {
               );
 
               if (result != -1) {
-                List<Outgoing> listOutgoing =
-                    await QrCode.readQrCode(result, 1);
+                List<Outgoing> listOutgoing = await QrCode.readQrCode(result);
                 if (listOutgoing.isNotEmpty) {
                   var result =
                       // ignore: use_build_context_synchronously
                       await Navigator.of(context).push(
                     TransitionsBuilder.createRoute(
-                      OutgoingInsertPage(),
+                      OutgoingInsertPage(listOutgoing: listOutgoing),
                     ),
                   );
 

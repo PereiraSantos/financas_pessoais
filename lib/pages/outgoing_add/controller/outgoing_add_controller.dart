@@ -36,11 +36,12 @@ class OutgoingAddController {
 
   void setColor(int value) => idCategory = value;
 
-  Future<bool> validateInput(int? id, BuildContext context) async {
+  Future<bool> validateInput(
+      int? id, BuildContext context, List<Outgoing>? listOutgoing) async {
     if (depesasController.currentState!.validate() && idFinance != null) {
       id != null
           ? await updateOutgoing(id, context)
-          : await insertOutgoing(context);
+          : await insertOutgoing(context, listOutgoing);
 
       return await Future.value(true);
     } else {
@@ -69,11 +70,35 @@ class OutgoingAddController {
         .whenComplete(() => message(context, "Atualizado com sucesso!!!"));
   }
 
-  Future<void> insertOutgoing(BuildContext context) async {
-    final outgoing = buildOutgoing();
-    await databaseOutgoingRepository
-        .insertOutgoing(outgoing)
-        .whenComplete(() => message(context, "Registrado com sucesso!!!"));
+  Future<void> insertOutgoing(
+      BuildContext context, List<Outgoing>? listOutgoing) async {
+    if (listOutgoing != null) {
+      final List<Outgoing> list = buildOutgoingList(listOutgoing);
+      await databaseOutgoingRepository
+          .insertOutgoingList(list)
+          .whenComplete(() => message(context, "Registrado com sucesso!!!"));
+    } else {
+      final outgoing = buildOutgoing();
+      await databaseOutgoingRepository
+          .insertOutgoing(outgoing)
+          .whenComplete(() => message(context, "Registrado com sucesso!!!"));
+    }
+  }
+
+  List<Outgoing> buildOutgoingList(List<Outgoing> listOutgoing) {
+    List<Outgoing> list = [];
+    for (var element in listOutgoing) {
+      list.add(
+        Outgoing(
+            date: element.date,
+            description: element.description,
+            idFinance: idFinance,
+            value: element.value,
+            idCategory: idCategory),
+      );
+    }
+
+    return list;
   }
 
   Outgoing buildOutgoing() {
@@ -89,10 +114,18 @@ class OutgoingAddController {
     if (value.toString().length < 10) {
       return double.parse(value.replaceAll("R\$", "").replaceAll(",", "."));
     } else {
-      return double.parse(value
-          .replaceAll("R\$", "")
-          .replaceAll(".", "")
-          .replaceAll(",00", ".0"));
+      try {
+        return double.parse(value
+            .replaceAll("R\$", "")
+            .replaceAll(".", "")
+            .replaceAll(",00", ".0"));
+      } catch (e) {
+        return double.parse(value
+            .replaceAll("R\$", "")
+            .replaceAll(".", "")
+            .replaceAll(",", "")
+            .replaceAll(",00", ".0"));
+      }
     }
   }
 

@@ -93,7 +93,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `outgoing` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `description` TEXT, `value` REAL, `date` TEXT, `id_category` INTEGER, `id_finance` INTEGER)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `category` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `description` TEXT, `color` INTEGER, `icon` TEXT)');
+            'CREATE TABLE IF NOT EXISTS `category` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `description` TEXT, `emoji` TEXT, `color` INTEGER, `icon` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -144,7 +144,7 @@ class _$FinanceDao extends FinanceDao {
 
   @override
   Future<List<Finance>> findAll() async {
-    return _queryAdapter.queryList('SELECT * FROM finance',
+    return _queryAdapter.queryList('SELECT * FROM finance order by id desc',
         mapper: (Map<String, Object?> row) => Finance(
             id: row['id'] as int?,
             value: row['value'] as double?,
@@ -263,7 +263,7 @@ class _$OutgoingDao extends OutgoingDao {
 
   @override
   Future<List<Outgoing>> findAll() async {
-    return _queryAdapter.queryList('SELECT * FROM outgoing',
+    return _queryAdapter.queryList('SELECT * FROM outgoing order by id desc',
         mapper: (Map<String, Object?> row) => Outgoing(
             id: row['id'] as int?,
             description: row['description'] as String?,
@@ -372,6 +372,7 @@ class _$CategoryDao extends CategoryDao {
             (Category item) => <String, Object?>{
                   'id': item.id,
                   'description': item.description,
+                  'emoji': item.emoji,
                   'color': item.color,
                   'icon': item.icon
                 });
@@ -386,10 +387,11 @@ class _$CategoryDao extends CategoryDao {
 
   @override
   Future<List<Category>> findAll() async {
-    return _queryAdapter.queryList('SELECT * FROM category',
+    return _queryAdapter.queryList('SELECT * FROM category order by id desc',
         mapper: (Map<String, Object?> row) => Category(
             id: row['id'] as int?,
             description: row['description'] as String?,
+            emoji: row['emoji'] as String?,
             color: row['color'] as int?,
             icon: row['icon'] as String?));
   }
@@ -400,6 +402,7 @@ class _$CategoryDao extends CategoryDao {
         mapper: (Map<String, Object?> row) => Category(
             id: row['id'] as int?,
             description: row['description'] as String?,
+            emoji: row['emoji'] as String?,
             color: row['color'] as int?,
             icon: row['icon'] as String?),
         arguments: [id]);
@@ -408,17 +411,14 @@ class _$CategoryDao extends CategoryDao {
   @override
   Future<Category?> updateCategoryById(
     String description,
+    String emoji,
     int color,
     int id,
   ) async {
     return _queryAdapter.query(
-        'UPDATE category set description = ?1, color = ?2 where id = ?3',
-        mapper: (Map<String, Object?> row) => Category(
-            id: row['id'] as int?,
-            description: row['description'] as String?,
-            color: row['color'] as int?,
-            icon: row['icon'] as String?),
-        arguments: [description, color, id]);
+        'UPDATE category set description = ?1, emoji = ?2, color = ?3 where id = ?4',
+        mapper: (Map<String, Object?> row) => Category(id: row['id'] as int?, description: row['description'] as String?, emoji: row['emoji'] as String?, color: row['color'] as int?, icon: row['icon'] as String?),
+        arguments: [description, emoji, color, id]);
   }
 
   @override

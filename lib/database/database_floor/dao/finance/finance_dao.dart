@@ -3,7 +3,7 @@ import 'package:financas_pessoais/entities/finance/finance.dart';
 
 @dao
 abstract class FinanceDao {
-  @Query('SELECT * FROM finance')
+  @Query('SELECT * FROM finance order by id desc')
   Future<List<Finance>> findAll();
 
   @Query('SELECT * FROM finance order by id desc limit 1')

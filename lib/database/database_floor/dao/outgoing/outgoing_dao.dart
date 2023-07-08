@@ -3,7 +3,7 @@ import 'package:financas_pessoais/entities/outgoing/outgoing.dart';
 
 @dao
 abstract class OutgoingDao {
-  @Query('SELECT * FROM outgoing')
+  @Query('SELECT * FROM outgoing order by id desc')
   Future<List<Outgoing>> findAll();
 
   @Query(

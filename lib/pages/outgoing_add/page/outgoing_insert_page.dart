@@ -17,6 +17,7 @@ import '../../../widgets/text_form_field_widget.dart';
 import '../../categoty_list/controller/category_list_controller.dart';
 
 import '../../outgoing_list/outigoing_list_controller/outgoing_list_controller.dart';
+import '../component/add_outgoing_qr_code.dart';
 import '../component/dropdown_button_category.dart';
 import '../component/dropdown_button_finance.dart';
 import '../controller/outgoing_add_controller.dart';
@@ -26,9 +27,11 @@ class OutgoingInsertPage extends StatefulWidget {
   OutgoingInsertPage({
     super.key,
     this.outgoing,
+    this.listOutgoing,
   });
 
   Outgoing? outgoing;
+  List<Outgoing>? listOutgoing = [];
 
   @override
   State<OutgoingInsertPage> createState() => _OutgoingInsertPageState();
@@ -69,21 +72,29 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextFormFieldWidget(
-                controller:
-                    outgoingAddController.textControllerDescricaoDespesa,
-                maxLine: 1,
-                hintText: 'Descrição',
-              ),
-              TextFormFieldWidget(
-                controller: outgoingAddController.textControllerValorDespesa,
-                maxLine: 1,
-                hintText: 'Valor',
-                keyboardType: TextInputType.number,
-                inputFormatter: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  CurrencyInputFormatter()
-                ],
+              Visibility(
+                visible: widget.listOutgoing == null ? true : false,
+                child: Column(
+                  children: [
+                    TextFormFieldWidget(
+                      controller:
+                          outgoingAddController.textControllerDescricaoDespesa,
+                      maxLine: 1,
+                      hintText: 'Descrição',
+                    ),
+                    TextFormFieldWidget(
+                      controller:
+                          outgoingAddController.textControllerValorDespesa,
+                      maxLine: 1,
+                      hintText: 'Valor',
+                      keyboardType: TextInputType.number,
+                      inputFormatter: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        CurrencyInputFormatter()
+                      ],
+                    ),
+                  ],
+                ),
               ),
               FutureBuilder(
                 future: finaceListController.getFinanceAll(),
@@ -322,6 +333,17 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                   ),
                 ),
               ),
+              Visibility(
+                visible: widget.listOutgoing != null ? true : false,
+                child: Column(
+                  children: [
+                    AddOutgoinQrCode(listOutgoing: widget.listOutgoing ?? []),
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 90),
+                    )
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -338,7 +360,7 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
               label: widget.outgoing != null ? 'EDITAR' : 'SALVAR',
               onClick: () async {
                 bool result = await outgoingAddController.validateInput(
-                    widget.outgoing?.id, context);
+                    widget.outgoing?.id, context, widget.listOutgoing);
                 if (result) {
                   // ignore: use_build_context_synchronously
                   Navigator.pop(context, true);

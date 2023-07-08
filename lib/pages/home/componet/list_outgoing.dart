@@ -52,7 +52,7 @@ class ListOutgoing extends StatelessWidget {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             content: Text(
-                              "Deseja excluir? \n${Format.currentFormat(snapshot.data![index].description!)}",
+                              "Deseja excluir? \n${snapshot.data![index].description!}",
                               style: const TextStyle(
                                   color: Colors.black45, fontSize: 20),
                             ),
@@ -127,119 +127,133 @@ class ListOutgoing extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () => onClickUpdate(snapshot.data![index]),
                       child: FutureBuilder(
-                          future: controller.categoryRepository
-                              .findCategoryById(
-                                  snapshot.data![index].idCategory ?? -1),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<Category?> snapshotCategory) {
-                            if (!snapshot.hasData &&
-                                snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                              return const SizedBox(
-                                width: 10,
-                                height: 10,
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
-                            } else {
-                              return Card(
-                                elevation: 8,
-                                color: ColorCategory.getColor(
-                                    snapshotCategory.data?.color ?? 0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            width: double.maxFinite,
-                                            padding: const EdgeInsets.only(
-                                                top: 5, left: 05),
-                                            child: Text(
-                                              'Descrição: ${snapshot.data![index].description}',
+                        future: controller.categoryRepository.findCategoryById(
+                            snapshot.data![index].idCategory ?? -1),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<Category?> snapshotCategory) {
+                          if (!snapshot.hasData &&
+                              snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                            return const SizedBox(
+                              width: 10,
+                              height: 10,
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          } else {
+                            return Card(
+                              elevation: 8,
+                              color: ColorCategory.getColor(
+                                  snapshotCategory.data?.color ?? 0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(
+                                          width: double.maxFinite,
+                                          padding: const EdgeInsets.only(
+                                              top: 5, left: 05),
+                                          child: Text(
+                                            'Descrição: ${snapshot.data![index].description}',
+                                            style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Color.fromARGB(
+                                                    132, 0, 0, 0)),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          alignment: Alignment.topRight,
+                                          padding: const EdgeInsets.only(
+                                              top: 5, left: 05, right: 10),
+                                          height: 20,
+                                          child: Text(
+                                              'R\$ ${Format.currentFormat(snapshot.data![index].value!)}',
                                               style: const TextStyle(
                                                   fontSize: 16,
                                                   color: Color.fromARGB(
                                                       132, 0, 0, 0)),
-                                              maxLines: 2,
+                                              maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          Container(
-                                            width: double.maxFinite,
-                                            padding: const EdgeInsets.only(
-                                                top: 5, left: 05, bottom: 08),
-                                            child: Visibility(
-                                              visible: snapshot.data?[index]
-                                                          .idCategory !=
-                                                      0
-                                                  ? true
-                                                  : false,
-                                              child: Text(
-                                                "Categoria: ${snapshotCategory.data?.description ?? 'Padrão'}",
-                                                style: const TextStyle(
-                                                  fontSize: 16,
-                                                  color: Color.fromARGB(
-                                                      132, 0, 0, 0),
-                                                ),
+                                              textAlign: TextAlign.left),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          width: double.maxFinite,
+                                          padding: const EdgeInsets.only(
+                                              top: 5, left: 05, bottom: 05),
+                                          child: Visibility(
+                                            visible: snapshot.data?[index]
+                                                        .idCategory !=
+                                                    0
+                                                ? true
+                                                : false,
+                                            child: Text(
+                                              "Categoria: ${snapshotCategory.data?.description ?? 'Padrão'}",
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Color.fromARGB(
+                                                    132, 0, 0, 0),
                                               ),
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.topRight,
-                                            padding: const EdgeInsets.only(
-                                                top: 5, left: 05, right: 10),
-                                            height: 20,
-                                            child: Text(
-                                                'R\$ ${Format.currentFormat(snapshot.data![index].value)}',
-                                                style: const TextStyle(
-                                                    fontSize: 16,
-                                                    color: Color.fromARGB(
-                                                        132, 0, 0, 0)),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.left),
                                           ),
-                                          Container(
-                                            alignment: Alignment.centerRight,
-                                            width: double.maxFinite,
-                                            padding: const EdgeInsets.only(
-                                                top: 5,
-                                                left: 05,
-                                                right: 10,
-                                                bottom: 08),
-                                            child: Text(
-                                              Format.formatDateWek(
-                                                  snapshot.data![index].date!),
-                                              style: const TextStyle(
-                                                  fontSize: 16,
-                                                  color: Color.fromARGB(
-                                                      132, 0, 0, 0)),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          alignment: Alignment.topRight,
+                                          padding: const EdgeInsets.only(
+                                              right: 10, top: 05),
+                                          child: Text(
+                                            snapshotCategory.data?.emoji ?? '',
+                                            style: const TextStyle(
+                                              fontSize: 14,
                                             ),
+                                            textAlign: TextAlign.right,
                                           ),
-                                        ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    width: double.maxFinite,
+                                    padding: const EdgeInsets.only(
+                                        left: 05, right: 10, bottom: 05),
+                                    child: Text(
+                                      'Data: ${Format.formatDateString(snapshot.data![index].date!)}',
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Color.fromARGB(132, 0, 0, 0),
                                       ),
                                     ),
-                                  ],
-                                ),
-                              );
-                            }
-                          }),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ),
                 );

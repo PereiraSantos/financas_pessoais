@@ -71,7 +71,7 @@ void listFinanceAll(BuildContext context, FinaceListController controller,
                                           height: 25,
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            'R\$:${Format.currentFormat(snapshot.data![index].value)}',
+                                            'R\$:${Format.currentFormat(snapshot.data![index].value!)}',
                                             style:
                                                 const TextStyle(fontSize: 18),
                                           )),

@@ -21,7 +21,7 @@ class Grafico {
           return PieChartSectionData(
             color: const Color.fromARGB(213, 76, 175, 79),
             value: total,
-            title: Format.currentFormat(total.toString()),
+            title: Format.currentFormat(total),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -32,7 +32,7 @@ class Grafico {
           return PieChartSectionData(
             color: const Color.fromARGB(213, 76, 175, 79),
             value: poupar,
-            title: Format.currentFormat(poupar.toString()),
+            title: Format.currentFormat(poupar),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -43,7 +43,7 @@ class Grafico {
           return PieChartSectionData(
             color: const Color.fromARGB(216, 33, 149, 243),
             value: sobra,
-            title: Format.currentFormat(sobra.toString()),
+            title: Format.currentFormat(sobra),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,

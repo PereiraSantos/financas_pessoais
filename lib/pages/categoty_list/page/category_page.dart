@@ -28,7 +28,7 @@ class _CategoryPageState extends State<CategoryPage> {
         child: AppBarWidgets(label: 'Categoria'),
       ),
       body: ListCategoriy(
-          onFinish: () => setState(() {}),
+          onClickSaveEdit: () => setState(() {}),
           onClickDelete: (int id) {
             categoryListController.deteleCategoryById(context, id);
             Navigator.pop(context);

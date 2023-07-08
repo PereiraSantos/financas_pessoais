@@ -15,8 +15,8 @@ class DataBaseCategoryRepository {
   }
 
   Future<Category?> updateCategory(
-      String description, int color, int id) async {
-    return await database.updateCategoryById(description, color, id);
+      String description, String emoji, int color, int id) async {
+    return await database.updateCategoryById(description, emoji, color, id);
   }
 
   Future<int> insertCategory(Category category) async {

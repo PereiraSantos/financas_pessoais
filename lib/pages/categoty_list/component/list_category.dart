@@ -7,12 +7,13 @@ import '../../category_add/page/category_insert_page.dart';
 import '../controller/category_list_controller.dart';
 
 class ListCategoriy extends StatelessWidget {
-  const ListCategoriy(
-      {super.key,
-      required this.onFinish,
-      required this.onClickDelete,
-      required this.categoryListController});
-  final Function() onFinish;
+  const ListCategoriy({
+    super.key,
+    required this.onClickSaveEdit,
+    required this.onClickDelete,
+    required this.categoryListController,
+  });
+  final Function() onClickSaveEdit;
   final Function(int id) onClickDelete;
   final CategoryListController categoryListController;
 
@@ -142,7 +143,7 @@ class ListCategoriy extends StatelessWidget {
                                   ),
                                 );
 
-                                if (result) onFinish;
+                                if (result) onClickSaveEdit();
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(
@@ -150,21 +151,37 @@ class ListCategoriy extends StatelessWidget {
                                   left: 5,
                                   right: 5,
                                 ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      alignment: Alignment.topLeft,
-                                      padding: const EdgeInsets.all(5),
-                                      child: Text(
-                                        'Descrição: ${snapshot.data![index].description}',
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.black54),
+                                child: Container(
+                                  width: double.infinity,
+                                  alignment: Alignment.topLeft,
+                                  padding: const EdgeInsets.all(5),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Expanded(
+                                        flex: 6,
+                                        child: Text(
+                                          'Descrição: ${snapshot.data![index].description}',
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.black54),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      Expanded(
+                                        child: Text(
+                                          ' ${snapshot.data![index].emoji ?? ''}',
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black54),
+                                          textAlign: TextAlign.right,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -188,6 +205,7 @@ class ListCategoriy extends StatelessWidget {
                 }
               },
             ),
+            const Padding(padding: EdgeInsets.only(bottom: 50))
           ],
         ),
       ),

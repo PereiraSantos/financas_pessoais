@@ -232,7 +232,6 @@ class _HomePageState extends State<HomePage> {
                               if (result) reloadPage();
                             },
                           ),
-                          const Padding(padding: EdgeInsets.all(10))
                         ],
                       );
                     } else {
@@ -296,13 +295,13 @@ class _HomePageState extends State<HomePage> {
 
                         if (result != -1) {
                           List<Outgoing> listOutgoing =
-                              await QrCode.readQrCode(result, finance.id!);
+                              await QrCode.readQrCode(result);
                           if (listOutgoing.isNotEmpty) {
                             var result =
                                 // ignore: use_build_context_synchronously
                                 await Navigator.of(context).push(
                               TransitionsBuilder.createRoute(
-                                OutgoingInsertPage(),
+                                OutgoingInsertPage(listOutgoing: listOutgoing),
                               ),
                             );
 

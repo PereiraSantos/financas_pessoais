@@ -7,10 +7,9 @@ class Format {
     Intl.defaultLocale = 'pt_BR';
   }
 
-  static currentFormat(number) {
+  static currentFormat(double number) {
     try {
-      return NumberFormat("#,##0.00", "pt_BR")
-          .format(double.parse(number.toString().replaceAll(",", "")));
+      return NumberFormat("#,##0.00", "pt_BR").format(number);
     } catch (e) {
       return number;
     }
@@ -32,7 +31,7 @@ class Format {
       date != '' ? DateFormat("d/MMMM", "pt_BR").format(dateParse(date)) : '';
 
   static String formatDateString(String date) =>
-      date != '' ? DateFormat("dd/MM/yy").format(dateParse(date)) : '';
+      date != '' ? DateFormat("dd/MM/yyyy").format(dateParse(date)) : '';
 
   static String formatDateStringDayMonth(String date) =>
       date != '' ? DateFormat("dd/MM").format(dateParse(date)) : '';

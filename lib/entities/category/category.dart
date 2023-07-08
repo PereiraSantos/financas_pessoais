@@ -9,6 +9,9 @@ class Category {
   @ColumnInfo(name: 'description')
   String? description;
 
+  @ColumnInfo(name: 'emoji')
+  String? emoji;
+
   @ColumnInfo(name: 'color')
   int? color;
 
@@ -18,6 +21,7 @@ class Category {
   Category({
     this.id,
     this.description,
+    this.emoji,
     this.color,
     this.icon,
   });

@@ -18,6 +18,10 @@ class CategoryInsertPage extends StatelessWidget {
   initDescription() async {
     if (category != null) {
       addCategoryController.description.text = category!.description!;
+
+      if (category?.emoji != null) {
+        addCategoryController.emoji.text = category!.emoji!;
+      }
     }
   }
 
@@ -41,6 +45,12 @@ class CategoryInsertPage extends StatelessWidget {
                 controller: addCategoryController.description,
                 hintText: 'Descrição',
                 keyboardType: TextInputType.text,
+              ),
+              TextFormFieldWidget(
+                controller: addCategoryController.emoji,
+                hintText: 'Emoji',
+                keyboardType: TextInputType.text,
+                valid: false,
               ),
               Container(
                 width: double.maxFinite,

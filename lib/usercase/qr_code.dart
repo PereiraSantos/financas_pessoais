@@ -3,12 +3,8 @@ import 'package:web_scraper/web_scraper.dart';
 
 import 'format_date.dart';
 
-/*
-
-*/
-
 class QrCode {
-  static Future<List<Outgoing>> readQrCode(String url, int idFinance) async {
+  static Future<List<Outgoing>> readQrCode(String url) async {
     List<Outgoing> list = [];
 
     final webScraper = WebScraper('http://www.fazenda.pr.gov.br');
@@ -41,12 +37,13 @@ class QrCode {
       }
 
       for (var i = 0; i < listProduct.length; i++) {
-        list.add(Outgoing(
+        list.add(
+          Outgoing(
             description: listProduct[i],
             value: listProductValue[i],
-            idFinance: idFinance,
             date: Format.formatDate(DateTime.now()),
-            idCategory: 0));
+          ),
+        );
       }
     }
 
