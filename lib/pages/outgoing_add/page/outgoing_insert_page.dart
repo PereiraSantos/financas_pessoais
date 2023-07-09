@@ -44,7 +44,7 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
 
   CategoryListController listCategoryController = CategoryListController();
 
-  FinaceListController finaceListController = FinaceListController();
+  FinanceListController finaceListController = FinanceListController();
 
   @override
   void initState() {
@@ -296,7 +296,7 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
               ),
               Container(
                 width: double.maxFinite,
-                padding: const EdgeInsets.only(left: 20, top: 10),
+                padding: const EdgeInsets.only(left: 20, top: 15),
                 child: const Text(
                   "Data despesa",
                   style: TextStyle(
@@ -305,32 +305,29 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                       color: Colors.black54),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15.0),
-                child: TextFormFieldWidget(
-                  controller: outgoingAddController.textControllerDataDespesa,
-                  readOnly: widget.outgoing?.id != null ? true : false,
-                  inputFormatter: [DateMask()],
-                  keyboardType: TextInputType.datetime,
-                  suffixIcon: IconButton(
-                    icon: const Icon(
-                      Icons.date_range,
-                    ),
-                    color: Colors.black54,
-                    iconSize: 22,
-                    onPressed: () async {
-                      final DateTime? picked = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2021),
-                        lastDate: DateTime(2025),
-                      );
-
-                      if (picked != null) {
-                        outgoingAddController.setValueDateRevision(picked);
-                      }
-                    },
+              TextFormFieldWidget(
+                controller: outgoingAddController.textControllerDataDespesa,
+                readOnly: widget.outgoing?.id != null ? true : false,
+                inputFormatter: [DateMask()],
+                keyboardType: TextInputType.datetime,
+                suffixIcon: IconButton(
+                  icon: const Icon(
+                    Icons.date_range,
                   ),
+                  color: Colors.black54,
+                  iconSize: 22,
+                  onPressed: () async {
+                    final DateTime? picked = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2021),
+                      lastDate: DateTime(2025),
+                    );
+
+                    if (picked != null) {
+                      outgoingAddController.setValueDateRevision(picked);
+                    }
+                  },
                 ),
               ),
               Visibility(

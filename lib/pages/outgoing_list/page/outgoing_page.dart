@@ -7,7 +7,7 @@ import '../../../usercase/qr_code.dart';
 import '../../../usercase/transitions_builder.dart';
 import '../../../widgets/app_bar_widgets.dart';
 import '../../../widgets/bottom_navigation_bar_widget.dart';
-import '../../home/componet/list_outgoing.dart';
+import '../../../widgets/list_outgoing_widgets.dart';
 import '../../outgoing_add/page/outgoing_insert_page.dart';
 import '../outigoing_list_controller/outgoing_list_controller.dart';
 
@@ -37,15 +37,18 @@ class _OutgoingPageState extends State<OutgoingPage> {
           padding: const EdgeInsets.only(top: 05.0, left: 5.0, right: 5.0),
           child: Column(
             children: [
-              ListOutgoing(
+              ListOutgoingWidgets(
                 controller: outgoingListController,
                 idFinance: -1,
                 search: outgoingListController.textController.text,
                 onLoad: (value) => value,
                 onClickDelete: (id) async {
-                  outgoingListController.deleteOutgoing(id, context);
-                  Navigator.pop(context);
-                  setState(() {});
+                  await outgoingListController
+                      .deleteOutgoing(id, context)
+                      .whenComplete(() {
+                    Navigator.pop(context);
+                    setState(() {});
+                  });
                 },
                 onClickUpdate: (Outgoing outgoing) async {
                   Outgoing? outgoingResult = await outgoingListController

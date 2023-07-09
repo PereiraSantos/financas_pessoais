@@ -12,7 +12,7 @@ import '../../finance_list/controller/finance_list_controller.dart';
 import '../../outgoing_add/controller/outgoing_add_controller.dart';
 import '../../outgoing_list/outigoing_list_controller/outgoing_list_controller.dart';
 import '../../outgoing_add/page/outgoing_insert_page.dart';
-import '../componet/list_outgoing.dart';
+import '../../../widgets/list_outgoing_widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, this.index = 0});
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   void reloadPage() => setState(() {});
 
   Future<Finance?> findFinanceHomePage() async {
-    finance = await FinaceListController().getFinance(null);
+    finance = await FinanceListController().getFinance(null);
 
     if (finance != null) {
       List<Outgoing> list = await outgoingListController
@@ -198,7 +198,7 @@ class _HomePageState extends State<HomePage> {
               ),
               text('Últimas despesas', 18, top: 20),
               FutureBuilder(
-                future: FinaceListController().getFinance(null),
+                future: FinanceListController().getFinance(null),
                 builder:
                     (BuildContext context, AsyncSnapshot<Finance?> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -211,21 +211,24 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          ListOutgoing(
+                          ListOutgoingWidgets(
                             controller: outgoingListController,
                             idFinance: snapshot.data!.id,
                             search: outgoingAddController.textController.text,
                             onLoad: (value) => sizeList = value,
                             onClickDelete: (id) async {
-                              outgoingAddController.deleteOutgoing(id, context);
-                              Navigator.pop(context);
-                              reloadPage();
+                              await outgoingAddController
+                                  .deleteOutgoing(id, context)
+                                  .whenComplete(() {
+                                Navigator.pop(context);
+                                reloadPage();
+                              });
                             },
                             onClickUpdate: (Outgoing outgoing) async {
                               // ignore: use_build_context_synchronously
                               var result = await Navigator.of(context).push(
                                 TransitionsBuilder.createRoute(
-                                  OutgoingInsertPage(),
+                                  OutgoingInsertPage(outgoing: outgoing),
                                 ),
                               );
 

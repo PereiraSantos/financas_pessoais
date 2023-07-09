@@ -3,7 +3,7 @@ import '../../../entities/finance/finance.dart';
 import '../../../usercase/format_date.dart';
 import '../../finance_list/controller/finance_list_controller.dart';
 
-void listFinanceAll(BuildContext context, FinaceListController controller,
+void listFinanceAll(BuildContext context, FinanceListController controller,
     Function(Finance) onClick) {
   showModalBottomSheet<void>(
     shape: const RoundedRectangleBorder(

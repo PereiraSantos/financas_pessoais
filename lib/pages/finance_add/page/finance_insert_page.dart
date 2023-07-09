@@ -61,7 +61,7 @@ class FinanceInsertPage extends StatelessWidget {
                   CurrencyInputFormatter()
                 ],
               ),
-              TextFormFieldWidget(
+              /* TextFormFieldWidget(
                 controller: financeInsertController.textControllerValorPoupar,
                 hintText: 'Guardar',
                 keyboardType: TextInputType.number,
@@ -70,37 +70,45 @@ class FinanceInsertPage extends StatelessWidget {
                   FilteringTextInputFormatter.digitsOnly,
                   CurrencyInputFormatter()
                 ],
+              ),*/
+              Container(
+                width: double.maxFinite,
+                padding: const EdgeInsets.only(left: 20, top: 15),
+                child: const Text(
+                  "Data finança",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 22,
+                      color: Colors.black54),
+                ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15.0),
-                child: TextFormFieldWidget(
-                  controller: financeInsertController.textControllerDataFinanca,
-                  readOnly: finance?.id != null ? true : false,
-                  inputFormatter: [DateMask()],
-                  keyboardType: TextInputType.datetime,
-                  suffixIcon: IconButton(
-                    icon: const Icon(
-                      Icons.date_range,
-                    ),
-                    color: Colors.black54,
-                    iconSize: 22,
-                    onPressed: () async {
-                      if (finance?.id == null) {
-                        final DateTime? picked = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2021),
-                          lastDate: DateTime(2025),
-                        );
-
-                        if (picked != null) {
-                          financeInsertController.setValueDateRevision(picked);
-                        }
-                      } else {
-                        //outgoingController.message(context, "Não é possivel editar");
-                      }
-                    },
+              TextFormFieldWidget(
+                controller: financeInsertController.textControllerDataFinanca,
+                readOnly: finance?.id != null ? true : false,
+                inputFormatter: [DateMask()],
+                keyboardType: TextInputType.datetime,
+                suffixIcon: IconButton(
+                  icon: const Icon(
+                    Icons.date_range,
                   ),
+                  color: Colors.black54,
+                  iconSize: 22,
+                  onPressed: () async {
+                    if (finance?.id == null) {
+                      final DateTime? picked = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2021),
+                        lastDate: DateTime(2025),
+                      );
+
+                      if (picked != null) {
+                        financeInsertController.setValueDateRevision(picked);
+                      }
+                    } else {
+                      //outgoingController.message(context, "Não é possivel editar");
+                    }
+                  },
                 ),
               ),
               Padding(

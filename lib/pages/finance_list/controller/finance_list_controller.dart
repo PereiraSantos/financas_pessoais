@@ -7,7 +7,7 @@ import '../../../database/database_finance_repository.dart';
 import '../../../database/database_floor/database_finance_floor.dart';
 import '../../../entities/finance/finance.dart';
 
-class FinaceListController {
+class FinanceListController {
   DataBaseFinanceRepository dataBaseFinanceRepository =
       DataBaseFinanceRepository(DatabaseFinanceFloor());
 
@@ -25,7 +25,7 @@ class FinaceListController {
     return await dataBaseFinanceRepository.findFinanceById(id);
   }
 
-  Future<void> onClickDelete(BuildContext context, int id) async {
+  Future<void> deteleFinanceById(BuildContext context, int id) async {
     List<Outgoing> list =
         await DatabaseOutgoingRepository(DatabaseOutgoingFloor())
             .findAllIdFinance(id);

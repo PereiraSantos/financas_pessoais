@@ -6,6 +6,7 @@ import 'package:financas_pessoais/database/database_floor/database_finance_floor
 
 import '../../../database/database_floor/database_outgoing_floor.dart';
 import '../../../database/database_outgoing_repository.dart';
+import '../../../entities/category/category.dart';
 import '../../../entities/finance/finance.dart';
 import '../../../entities/outgoing/outgoing.dart';
 import '../../../usercase/format_date.dart';
@@ -16,6 +17,7 @@ class OutgoingListController {
   final textControllerDataDespesa = TextEditingController();
   final textControllerValorDespesa = TextEditingController();
   final textController = TextEditingController();
+  List<Category>? listCategory = [];
 
   int? idFinance;
 
@@ -37,11 +39,14 @@ class OutgoingListController {
         : await databaseOutgoingRepository.findAllIdFinance(idFinance!);
   }
 
-  Future<List<Outgoing>> getOutgoingAll() async =>
-      await databaseOutgoingRepository.findAll();
+  Future<List<Outgoing>> getOutgoingAll() async {
+    listCategory = await categoryRepository.findAll();
+    return await databaseOutgoingRepository.findAll();
+  }
 
   Future<List<Outgoing>> getOutgoingLast(
       {String? value, int? idFinance}) async {
+    listCategory = await categoryRepository.findAll();
     return value != null && value != ""
         ? await databaseOutgoingRepository.findOutgoingDescription('%$value%')
         : await databaseOutgoingRepository.findAllIdFinance(idFinance ?? -1);
@@ -73,4 +78,9 @@ class OutgoingListController {
 
   initDate() =>
       textControllerDataDespesa.text = Format.formatDate(DateTime.now());
+
+  Category? getCategory(int id) {
+    var element = listCategory?.where((element) => element.id == id);
+    return element!.isEmpty ? Category() : element.first;
+  }
 }

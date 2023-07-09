@@ -29,10 +29,13 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
       body: ListCategoriy(
           onClickSaveEdit: () => setState(() {}),
-          onClickDelete: (int id) {
-            categoryListController.deteleCategoryById(context, id);
-            Navigator.pop(context);
-            setState(() {});
+          onClickDelete: (int id) async {
+            await categoryListController
+                .deteleCategoryById(context, id)
+                .whenComplete(() {
+              Navigator.pop(context);
+              setState(() {});
+            });
           },
           categoryListController: categoryListController),
       floatingActionButton: AddCategoriyButton(onFinish: () => setState(() {})),
