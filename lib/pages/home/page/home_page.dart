@@ -36,8 +36,7 @@ class _HomePageState extends State<HomePage> {
     finance = await FinanceListController().getFinance(null);
 
     if (finance != null) {
-      List<Outgoing> list = await outgoingListController
-          .findAllOutgoingByIdFinance(finance?.id ?? -1);
+      List<Outgoing> list = await outgoingListController.findAllOutgoingByIdFinance(finance?.id ?? -1);
 
       totalOutgoing.value = 0;
 
@@ -53,9 +52,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
       width: double.maxFinite,
       padding: EdgeInsets.only(left: 10, top: top ?? 5.0),
-      child: Text(value,
-          style: TextStyle(
-              fontSize: font, fontWeight: FontWeight.w300, color: color)),
+      child: Text(value, style: TextStyle(fontSize: font, fontWeight: FontWeight.w300, color: color)),
     );
   }
 
@@ -81,8 +78,7 @@ class _HomePageState extends State<HomePage> {
               );
             } else {
               if (snapshot.data != null) {
-                return Text(
-                    'Finança ${Format.formatDateMonth(snapshot.data?.dateStart ?? '')} ',
+                return Text('Finança ${Format.formatDateMonth(snapshot.data?.dateStart ?? '')} ',
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w300,
@@ -108,8 +104,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               FutureBuilder(
                 future: findFinanceHomePage(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<Finance?> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<Finance?> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -131,10 +126,7 @@ class _HomePageState extends State<HomePage> {
                             flex: 16,
                             child: Column(
                               children: [
-                                text(
-                                    'R\$ ${Format.currentFormat(snapshot.data?.value ?? 0)}',
-                                    13.5,
-                                    top: 05),
+                                text('R\$ ${Format.currentFormat(snapshot.data?.value ?? 0)}', 13.5, top: 05),
                                 ValueListenableBuilder(
                                   valueListenable: totalOutgoing,
                                   builder: (context, value, child) {
@@ -142,9 +134,7 @@ class _HomePageState extends State<HomePage> {
                                         'R\$ ${Format.currentFormat(calulate(value, snapshot.data?.value ?? 0))}',
                                         13.5,
                                         top: 2,
-                                        color: calulate(value,
-                                                    snapshot.data?.value ?? 0) <
-                                                0
+                                        color: calulate(value, snapshot.data?.value ?? 0) < 0
                                             ? Colors.red
                                             : null);
                                   },
@@ -161,8 +151,8 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 width: double.maxFinite,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 17),
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 05, top: 10),
                 child: GestureDetector(
                   onTap: () async {
                     var result = await Navigator.of(context).push(
@@ -174,15 +164,13 @@ class _HomePageState extends State<HomePage> {
                     if (result) reloadPage();
                   },
                   child: Card(
-                    elevation: 10,
+                    elevation: 6,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(80),
                     ),
                     child: const Padding(
-                      padding: EdgeInsets.only(
-                          left: 10.0, right: 10.0, top: 3, bottom: 3),
-                      child: Text('+ Adicionar nova finança',
-                          style: TextStyle(fontSize: 14)),
+                      padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 3, bottom: 3),
+                      child: Text('Nova finança', style: TextStyle(fontSize: 12, color: Colors.black38)),
                     ),
                   ),
                 ),
@@ -199,8 +187,7 @@ class _HomePageState extends State<HomePage> {
               text('Últimas despesas', 18, top: 20),
               FutureBuilder(
                 future: FinanceListController().getFinance(null),
-                builder:
-                    (BuildContext context, AsyncSnapshot<Finance?> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<Finance?> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -217,9 +204,7 @@ class _HomePageState extends State<HomePage> {
                             search: outgoingAddController.textController.text,
                             onLoad: (value) => sizeList = value,
                             onClickDelete: (id) async {
-                              await outgoingAddController
-                                  .deleteOutgoing(id, context)
-                                  .whenComplete(() {
+                              await outgoingAddController.deleteOutgoing(id, context).whenComplete(() {
                                 Navigator.pop(context);
                                 reloadPage();
                               });
@@ -246,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                   }
                 },
               ),
-              text('Adicionar nova despesa', 18),
+              text('Nova despesa', 18),
               Container(
                 width: double.maxFinite,
                 padding: const EdgeInsets.only(left: 05, top: 10, bottom: 15.0),
@@ -278,27 +263,23 @@ class _HomePageState extends State<HomePage> {
                       mini: true,
                       backgroundColor: Colors.white,
                       onPressed: () async {
-                        Finance? finance = await outgoingListController
-                            .getFinanceDateFinishIsNull();
+                        Finance? finance = await outgoingListController.getFinanceDateFinishIsNull();
 
                         if (finance == null) {
                           // ignore: use_build_context_synchronously
-                          outgoingAddController.message(
-                              context, "Não há finanças cadastrada!!!");
+                          outgoingAddController.message(context, "Não há finanças cadastrada!!!");
                           return;
                         }
                         // ignore: use_build_context_synchronously
                         var result = await Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                const SimpleBarcodeScannerPage(),
+                            builder: (context) => const SimpleBarcodeScannerPage(),
                           ),
                         );
 
                         if (result != -1) {
-                          List<Outgoing> listOutgoing =
-                              await QrCode.readQrCode(result);
+                          List<Outgoing> listOutgoing = await QrCode.readQrCode(result);
                           if (listOutgoing.isNotEmpty) {
                             var result =
                                 // ignore: use_build_context_synchronously
@@ -312,8 +293,7 @@ class _HomePageState extends State<HomePage> {
                           }
                         }
                       },
-                      child: const Icon(Icons.qr_code_2,
-                          size: 25, color: Colors.black54),
+                      child: const Icon(Icons.qr_code_2, size: 25, color: Colors.black54),
                     ),
                     /*FloatingActionButton(
                       heroTag: "btn3",

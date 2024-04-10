@@ -27,10 +27,8 @@ class ListFinance extends StatelessWidget {
           children: [
             FutureBuilder(
               future: financeListController.getFinanceAll(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<Finance>> snapshot) {
-                if (!snapshot.hasData &&
-                    snapshot.connectionState == ConnectionState.waiting) {
+              builder: (BuildContext context, AsyncSnapshot<List<Finance>> snapshot) {
+                if (!snapshot.hasData && snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
@@ -51,72 +49,46 @@ class ListFinance extends StatelessWidget {
                                     return AlertDialog(
                                       content: Text(
                                         "Deseja excluir? \n${Format.currentFormat(snapshot.data![index].value!)}",
-                                        style: const TextStyle(
-                                            color: Colors.black45,
-                                            fontSize: 20),
+                                        style: const TextStyle(color: Colors.black45, fontSize: 20),
                                       ),
                                       actions: <Widget>[
                                         Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10.0, right: 15.0),
+                                          padding: const EdgeInsets.only(left: 10.0, right: 15.0),
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               TextButton(
-                                                onPressed: () => onClickDelete(
-                                                    snapshot.data![index].id!),
+                                                onPressed: () => onClickDelete(snapshot.data![index].id!),
                                                 style: ButtonStyle(
-                                                  side:
-                                                      MaterialStateProperty.all(
+                                                  side: MaterialStateProperty.all(
                                                     const BorderSide(
-                                                        width: 2,
-                                                        color: Color.fromARGB(
-                                                            80, 0, 0, 0)),
+                                                        width: 2, color: Color.fromARGB(80, 0, 0, 0)),
                                                   ),
-                                                  foregroundColor:
-                                                      MaterialStateProperty.all(
-                                                          const Color.fromARGB(
-                                                              80, 0, 0, 0)),
-                                                  padding:
-                                                      MaterialStateProperty.all(
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 10,
-                                                        horizontal: 40),
+                                                  foregroundColor: MaterialStateProperty.all(
+                                                      const Color.fromARGB(80, 0, 0, 0)),
+                                                  padding: MaterialStateProperty.all(
+                                                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
                                                   ),
-                                                  textStyle:
-                                                      MaterialStateProperty.all(
-                                                    const TextStyle(
-                                                        fontSize: 18),
+                                                  textStyle: MaterialStateProperty.all(
+                                                    const TextStyle(fontSize: 18),
                                                   ),
                                                 ),
                                                 child: const Text("SIM"),
                                               ),
                                               TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    context, false),
+                                                onPressed: () => Navigator.pop(context, false),
                                                 style: ButtonStyle(
-                                                  side:
-                                                      MaterialStateProperty.all(
+                                                  side: MaterialStateProperty.all(
                                                     const BorderSide(
-                                                        width: 2,
-                                                        color: Color.fromARGB(
-                                                            80, 0, 0, 0)),
+                                                        width: 2, color: Color.fromARGB(80, 0, 0, 0)),
                                                   ),
-                                                  foregroundColor:
-                                                      MaterialStateProperty.all(
-                                                          const Color.fromARGB(
-                                                              80, 0, 0, 0)),
-                                                  padding:
-                                                      MaterialStateProperty.all(
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 10,
-                                                        horizontal: 40),
+                                                  foregroundColor: MaterialStateProperty.all(
+                                                      const Color.fromARGB(80, 0, 0, 0)),
+                                                  padding: MaterialStateProperty.all(
+                                                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
                                                   ),
-                                                  textStyle:
-                                                      MaterialStateProperty.all(
-                                                    const TextStyle(
-                                                        fontSize: 18),
+                                                  textStyle: MaterialStateProperty.all(
+                                                    const TextStyle(fontSize: 18),
                                                   ),
                                                 ),
                                                 child: const Text("NÃO"),
@@ -135,22 +107,21 @@ class ListFinance extends StatelessWidget {
                               elevation: 4,
                               child: InkWell(
                                 onTap: () async {
-                                  Finance? finance = await financeListController
-                                      .getFinanceById(
-                                          snapshot.data![index].id!);
+                                  Finance? finance =
+                                      await financeListController.getFinanceById(snapshot.data![index].id!);
 
                                   // ignore: use_build_context_synchronously
                                   var result = await Navigator.of(context).push(
                                     TransitionsBuilder.createRoute(
-                                      FinanceInsertPage(finance: finance),
+                                      FinanceInsertPage(
+                                          finance: finance, duplicate: snapshot.data!.isNotEmpty),
                                     ),
                                   );
 
                                   if (result) onClickSaveEdit();
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 2, left: 5, right: 5),
+                                  padding: const EdgeInsets.only(top: 2, left: 5, right: 5),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
@@ -160,18 +131,14 @@ class ListFinance extends StatelessWidget {
                                           alignment: Alignment.topLeft,
                                           child: Text(
                                             'Receita: R\$ ${Format.currentFormat(snapshot.data![index].value!)}',
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.black54),
+                                            style: const TextStyle(fontSize: 18, color: Colors.black54),
                                           )),
                                       Container(
                                         alignment: Alignment.topLeft,
                                         height: 25,
                                         child: Text(
                                           'De ${snapshot.data![index].dateStart} até ${snapshot.data![index].dateFinish ?? Format.formatDate(DateTime.now())}',
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.black54),
+                                          style: const TextStyle(fontSize: 18, color: Colors.black54),
                                         ),
                                       ),
                                     ],
@@ -187,10 +154,7 @@ class ListFinance extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 12.0),
                       child: const Text(
                         "Não há finança!!!",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black54,
-                            fontWeight: FontWeight.w300),
+                        style: TextStyle(fontSize: 15, color: Colors.black54, fontWeight: FontWeight.w300),
                       ),
                     );
                   }

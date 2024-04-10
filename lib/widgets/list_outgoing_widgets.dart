@@ -31,8 +31,7 @@ class ListOutgoingWidgets extends StatelessWidget {
           ? controller.getOutgoingAll()
           : controller.getOutgoingLast(value: search, idFinance: idFinance),
       builder: (BuildContext context, AsyncSnapshot<List<Outgoing>> snapshot) {
-        if (!snapshot.hasData &&
-            snapshot.connectionState == ConnectionState.waiting) {
+        if (!snapshot.hasData && snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(),
           );
@@ -53,34 +52,24 @@ class ListOutgoingWidgets extends StatelessWidget {
                           return AlertDialog(
                             content: Text(
                               "Deseja excluir? \n${snapshot.data![index].description!}",
-                              style: const TextStyle(
-                                  color: Colors.black45, fontSize: 20),
+                              style: const TextStyle(color: Colors.black45, fontSize: 20),
                             ),
                             actions: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10.0, right: 15.0),
+                                padding: const EdgeInsets.only(left: 10.0, right: 15.0),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     TextButton(
-                                      onPressed: () => onClickDelete(
-                                          snapshot.data![index].id!),
+                                      onPressed: () => onClickDelete(snapshot.data![index].id!),
                                       style: ButtonStyle(
                                         side: MaterialStateProperty.all(
-                                          const BorderSide(
-                                              width: 2,
-                                              color:
-                                                  Color.fromARGB(80, 0, 0, 0)),
+                                          const BorderSide(width: 2, color: Color.fromARGB(80, 0, 0, 0)),
                                         ),
                                         foregroundColor:
-                                            MaterialStateProperty.all(
-                                                const Color.fromARGB(
-                                                    80, 0, 0, 0)),
+                                            MaterialStateProperty.all(const Color.fromARGB(80, 0, 0, 0)),
                                         padding: MaterialStateProperty.all(
-                                          const EdgeInsets.symmetric(
-                                              vertical: 10, horizontal: 40),
+                                          const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
                                         ),
                                         textStyle: MaterialStateProperty.all(
                                           const TextStyle(fontSize: 18),
@@ -89,22 +78,15 @@ class ListOutgoingWidgets extends StatelessWidget {
                                       child: const Text("SIM"),
                                     ),
                                     TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, false),
+                                      onPressed: () => Navigator.pop(context, false),
                                       style: ButtonStyle(
                                         side: MaterialStateProperty.all(
-                                          const BorderSide(
-                                              width: 2,
-                                              color:
-                                                  Color.fromARGB(80, 0, 0, 0)),
+                                          const BorderSide(width: 2, color: Color.fromARGB(80, 0, 0, 0)),
                                         ),
                                         foregroundColor:
-                                            MaterialStateProperty.all(
-                                                const Color.fromARGB(
-                                                    80, 0, 0, 0)),
+                                            MaterialStateProperty.all(const Color.fromARGB(80, 0, 0, 0)),
                                         padding: MaterialStateProperty.all(
-                                          const EdgeInsets.symmetric(
-                                              vertical: 10, horizontal: 40),
+                                          const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
                                         ),
                                         textStyle: MaterialStateProperty.all(
                                           const TextStyle(fontSize: 18),
@@ -128,11 +110,8 @@ class ListOutgoingWidgets extends StatelessWidget {
                       onTap: () => onClickUpdate(snapshot.data![index]),
                       child: Card(
                         elevation: 8,
-                        color: ColorCategory.getColor(controller
-                                .getCategory(
-                                    snapshot.data![index].idCategory ?? -1)
-                                ?.id ??
-                            0),
+                        color: ColorCategory.getColor(
+                            controller.getCategory(snapshot.data![index].idCategory ?? -1)?.color ?? 0),
                         child: Column(
                           children: [
                             Row(
@@ -144,13 +123,11 @@ class ListOutgoingWidgets extends StatelessWidget {
                                   flex: 2,
                                   child: Container(
                                     width: double.maxFinite,
-                                    padding:
-                                        const EdgeInsets.only(top: 5, left: 05),
+                                    padding: const EdgeInsets.only(top: 5, left: 05),
                                     child: Text(
                                       'Descrição: ${snapshot.data![index].description}',
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Color.fromARGB(132, 0, 0, 0)),
+                                      style:
+                                          const TextStyle(fontSize: 16, color: Color.fromARGB(132, 0, 0, 0)),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -159,15 +136,11 @@ class ListOutgoingWidgets extends StatelessWidget {
                                 Expanded(
                                   child: Container(
                                     alignment: Alignment.topRight,
-                                    padding: const EdgeInsets.only(
-                                        top: 5, left: 05, right: 10),
+                                    padding: const EdgeInsets.only(top: 5, left: 05, right: 10),
                                     height: 20,
-                                    child: Text(
-                                        'R\$ ${Format.currentFormat(snapshot.data![index].value!)}',
+                                    child: Text('R\$ ${Format.currentFormat(snapshot.data![index].value!)}',
                                         style: const TextStyle(
-                                            fontSize: 16,
-                                            color:
-                                                Color.fromARGB(132, 0, 0, 0)),
+                                            fontSize: 16, color: Color.fromARGB(132, 0, 0, 0)),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left),
@@ -176,12 +149,10 @@ class ListOutgoingWidgets extends StatelessWidget {
                               ],
                             ),
                             CategoryWidgets(
-                                category: controller.getCategory(
-                                    snapshot.data![index].idCategory ?? -1)),
+                                category: controller.getCategory(snapshot.data![index].idCategory ?? -1)),
                             Container(
                               width: double.maxFinite,
-                              padding: const EdgeInsets.only(
-                                  left: 05, right: 10, bottom: 05),
+                              padding: const EdgeInsets.only(left: 05, right: 10, bottom: 05),
                               child: Text(
                                 'Data: ${Format.formatDateString(snapshot.data![index].date!)}',
                                 style: const TextStyle(
@@ -204,10 +175,7 @@ class ListOutgoingWidgets extends StatelessWidget {
               padding: const EdgeInsets.only(left: 12.0),
               child: const Text(
                 "Não há despesas!!!",
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w300),
+                style: TextStyle(fontSize: 15, color: Colors.black54, fontWeight: FontWeight.w300),
               ),
             );
           }

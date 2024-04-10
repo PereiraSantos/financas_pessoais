@@ -28,7 +28,7 @@ class AddCategoriyButton extends StatelessWidget {
         child: const Padding(
           padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 3, bottom: 3),
           child: Text(
-            '+ Adicionar nova categoria',
+            'Nova categoria',
             style: TextStyle(fontSize: 14),
           ),
         ),

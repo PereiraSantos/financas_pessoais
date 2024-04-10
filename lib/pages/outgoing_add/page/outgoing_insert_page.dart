@@ -62,8 +62,7 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
       backgroundColor: const Color(0xffffffff),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60.0),
-        child: AppBarWidgets(
-            label: widget.outgoing != null ? "Editar despesa" : "Nova despesa"),
+        child: AppBarWidgets(label: widget.outgoing != null ? "Editar despesa" : "Nova despesa"),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -77,29 +76,23 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                 child: Column(
                   children: [
                     TextFormFieldWidget(
-                      controller:
-                          outgoingAddController.textControllerDescricaoDespesa,
+                      controller: outgoingAddController.textControllerDescricaoDespesa,
                       maxLine: 1,
                       hintText: 'Descrição',
                     ),
                     TextFormFieldWidget(
-                      controller:
-                          outgoingAddController.textControllerValorDespesa,
+                      controller: outgoingAddController.textControllerValorDespesa,
                       maxLine: 1,
                       hintText: 'Valor',
                       keyboardType: TextInputType.number,
-                      inputFormatter: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        CurrencyInputFormatter()
-                      ],
+                      inputFormatter: [FilteringTextInputFormatter.digitsOnly, CurrencyInputFormatter()],
                     ),
                   ],
                 ),
               ),
               FutureBuilder(
                 future: finaceListController.getFinanceAll(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<Finance>> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<List<Finance>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -117,10 +110,8 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                             padding: const EdgeInsets.only(left: 20, top: 10),
                             child: const Text(
                               "Finança",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 22,
-                                  color: Colors.black54),
+                              style:
+                                  TextStyle(fontWeight: FontWeight.w300, fontSize: 22, color: Colors.black54),
                             ),
                           ),
                           DropdownButtonFinance(
@@ -140,9 +131,7 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                                 const Expanded(
                                   child: Text(
                                     "Não há finança",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 15),
+                                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
                                   ),
                                 ),
                                 Expanded(
@@ -153,8 +142,7 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                                     padding: const EdgeInsets.only(right: 15),
                                     child: GestureDetector(
                                       onTap: () async {
-                                        bool result =
-                                            await Navigator.of(context).push(
+                                        bool result = await Navigator.of(context).push(
                                           TransitionsBuilder.createRoute(
                                             FinanceInsertPage(),
                                           ),
@@ -165,17 +153,13 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                                       child: Card(
                                         elevation: 10,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(80),
+                                          borderRadius: BorderRadius.circular(80),
                                         ),
                                         child: const Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 10.0,
-                                              right: 10.0,
-                                              top: 3,
-                                              bottom: 3),
+                                          padding:
+                                              EdgeInsets.only(left: 10.0, right: 10.0, top: 3, bottom: 3),
                                           child: Text(
-                                            '+ Adicionar nova finança',
+                                            'Nova finança',
                                             style: TextStyle(fontSize: 14),
                                           ),
                                         ),
@@ -186,9 +170,7 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                               ],
                             ),
                             Visibility(
-                              visible: outgoingAddController.idFinance == null
-                                  ? true
-                                  : false,
+                              visible: outgoingAddController.idFinance == null ? true : false,
                               child: const SizedBox(
                                 width: double.maxFinite,
                                 child: Text(
@@ -209,8 +191,7 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
               ),
               FutureBuilder(
                 future: listCategoryController.getCategory(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<Category>> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -226,14 +207,11 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                             padding: const EdgeInsets.only(left: 20, top: 10),
                             child: const Text(
                               "Categoria",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 22,
-                                  color: Colors.black54),
+                              style:
+                                  TextStyle(fontWeight: FontWeight.w300, fontSize: 22, color: Colors.black54),
                             ),
                           ),
-                          DropdownButtoncategory(
-                              outgoingAddController: outgoingAddController),
+                          DropdownButtoncategory(outgoingAddController: outgoingAddController),
                         ],
                       );
                     }
@@ -246,8 +224,7 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                             const Expanded(
                               child: Text(
                                 "Não há categoria",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w300, fontSize: 15),
+                                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
                               ),
                             ),
                             Expanded(
@@ -258,8 +235,7 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                                 padding: const EdgeInsets.only(right: 15),
                                 child: GestureDetector(
                                   onTap: () async {
-                                    var result =
-                                        await Navigator.of(context).push(
+                                    var result = await Navigator.of(context).push(
                                       TransitionsBuilder.createRoute(
                                         const CategoryPage(index: 2),
                                       ),
@@ -273,13 +249,9 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                                       borderRadius: BorderRadius.circular(80),
                                     ),
                                     child: const Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 10.0,
-                                          right: 10.0,
-                                          top: 3,
-                                          bottom: 3),
+                                      padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 3, bottom: 3),
                                       child: Text(
-                                        '+ Adicionar nova categoria',
+                                        'Nova categoria',
                                         style: TextStyle(fontSize: 14),
                                       ),
                                     ),
@@ -299,10 +271,7 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
                 padding: const EdgeInsets.only(left: 20, top: 15),
                 child: const Text(
                   "Data despesa",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontSize: 22,
-                      color: Colors.black54),
+                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 22, color: Colors.black54),
                 ),
               ),
               TextFormFieldWidget(
@@ -351,8 +320,7 @@ class _OutgoingInsertPageState extends State<OutgoingInsertPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButtonWidget(
-                label: 'CANCELA', onClick: () => Navigator.pop(context, false)),
+            TextButtonWidget(label: 'CANCELA', onClick: () => Navigator.pop(context, false)),
             TextButtonWidget(
               label: widget.outgoing != null ? 'EDITAR' : 'SALVAR',
               onClick: () async {

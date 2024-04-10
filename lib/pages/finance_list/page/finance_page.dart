@@ -30,9 +30,7 @@ class _FinancePageState extends State<FinancePage> {
       body: ListFinance(
           financeListController: financeListController,
           onClickDelete: (int id) async {
-            await financeListController
-                .deteleFinanceById(context, id)
-                .whenComplete(() {
+            await financeListController.deteleFinanceById(context, id).whenComplete(() {
               Navigator.pop(context);
               setState(() {});
             });
@@ -54,10 +52,8 @@ class _FinancePageState extends State<FinancePage> {
             borderRadius: BorderRadius.circular(80),
           ),
           child: const Padding(
-            padding:
-                EdgeInsets.only(left: 10.0, right: 10.0, top: 3, bottom: 3),
-            child: Text('+ Adicionar nova finança',
-                style: TextStyle(fontSize: 14)),
+            padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 3, bottom: 3),
+            child: Text('Nova finança', style: TextStyle(fontSize: 14)),
           ),
         ),
       ),

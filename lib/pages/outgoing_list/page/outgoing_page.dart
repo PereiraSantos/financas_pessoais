@@ -21,8 +21,7 @@ class OutgoingPage extends StatefulWidget {
 }
 
 class _OutgoingPageState extends State<OutgoingPage> {
-  final OutgoingListController outgoingListController =
-      OutgoingListController();
+  final OutgoingListController outgoingListController = OutgoingListController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +42,13 @@ class _OutgoingPageState extends State<OutgoingPage> {
                 search: outgoingListController.textController.text,
                 onLoad: (value) => value,
                 onClickDelete: (id) async {
-                  await outgoingListController
-                      .deleteOutgoing(id, context)
-                      .whenComplete(() {
+                  await outgoingListController.deleteOutgoing(id, context).whenComplete(() {
                     Navigator.pop(context);
                     setState(() {});
                   });
                 },
                 onClickUpdate: (Outgoing outgoing) async {
-                  Outgoing? outgoingResult = await outgoingListController
-                      .getOutgoingById(outgoing.id!);
+                  Outgoing? outgoingResult = await outgoingListController.getOutgoingById(outgoing.id!);
 
                   // ignore: use_build_context_synchronously
                   var result = await Navigator.of(context).push(
@@ -97,13 +93,11 @@ class _OutgoingPageState extends State<OutgoingPage> {
             mini: true,
             backgroundColor: Colors.white,
             onPressed: () async {
-              Finance? finance =
-                  await outgoingListController.getFinanceDateFinishIsNull();
+              Finance? finance = await outgoingListController.getFinanceDateFinishIsNull();
 
               if (finance == null) {
                 // ignore: use_build_context_synchronously
-                outgoingListController.message(
-                    context, "Não há finanças cadastrada!!!");
+                outgoingListController.message(context, "Não há finanças cadastrada!!!");
                 return;
               }
               // ignore: use_build_context_synchronously
@@ -131,43 +125,6 @@ class _OutgoingPageState extends State<OutgoingPage> {
             },
             child: const Icon(Icons.qr_code_2, size: 25, color: Colors.black54),
           ),
-          /* FloatingActionButton(
-            heroTag: "btn3",
-            mini: true,
-            backgroundColor: Colors.white,
-            onPressed: () async {
-              var result = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SimpleBarcodeScannerPage(),
-                ),
-              );
-
-              if (result != -1) {
-                List<Outgoing> listOutgoing =
-                    await QrCode.readQrCode(result, 1);
-                if (listOutgoing.isNotEmpty) {
-                  var result =
-                      // ignore: use_build_context_synchronously
-                      await Navigator.of(context).push(
-                    TransitionsBuilder.createRoute(
-                      OutgoingInsertPage(listOutgoing: listOutgoing),
-                    ),
-                  );
-
-                  if (result) setState(() {});
-                }
-              }
-            },
-            child: Transform.rotate(
-              angle: 180 * math.pi / 360,
-              child: const Icon(
-                Icons.horizontal_split,
-                size: 25,
-                color: Colors.black54,
-              ),
-            ),
-          ),*/
         ],
       ),
       bottomNavigationBar: BottomNavigationBarWidget(index: widget.index),

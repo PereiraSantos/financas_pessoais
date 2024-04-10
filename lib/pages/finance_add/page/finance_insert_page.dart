@@ -12,7 +12,7 @@ import '../controller/finance_insert_controller.dart';
 
 // ignore: must_be_immutable
 class FinanceInsertPage extends StatelessWidget {
-  FinanceInsertPage({super.key, this.finance}) {
+  FinanceInsertPage({super.key, this.finance, this.duplicate = false}) {
     initElement();
   }
 
@@ -20,20 +20,18 @@ class FinanceInsertPage extends StatelessWidget {
     financeInsertController.initDate();
 
     if (finance != null) {
-      financeInsertController.textControllerValorFinanca.text =
-          Format.currentFormat(finance!.value!);
+      financeInsertController.textControllerValorFinanca.text = Format.currentFormat(finance!.value!);
 
       if (finance!.valueSave! > 0.0) {
-        financeInsertController.textControllerValorPoupar.text =
-            Format.currentFormat(finance!.valueSave!);
+        financeInsertController.textControllerValorPoupar.text = Format.currentFormat(finance!.valueSave!);
       }
 
-      financeInsertController.textControllerDataFinanca.text =
-          finance!.dateStart!.toString();
+      financeInsertController.textControllerDataFinanca.text = finance!.dateStart!.toString();
     }
   }
 
   Finance? finance;
+  bool? duplicate;
   FinanceInsertController financeInsertController = FinanceInsertController();
 
   @override
@@ -42,8 +40,7 @@ class FinanceInsertPage extends StatelessWidget {
       backgroundColor: const Color(0xffffffff),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60.0),
-        child: AppBarWidgets(
-            label: finance != null ? "Editar finança" : "Nova finança"),
+        child: AppBarWidgets(label: finance != null ? "Editar finança" : "Nova finança"),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -56,30 +53,14 @@ class FinanceInsertPage extends StatelessWidget {
                 controller: financeInsertController.textControllerValorFinanca,
                 hintText: 'Valor',
                 keyboardType: TextInputType.number,
-                inputFormatter: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  CurrencyInputFormatter()
-                ],
+                inputFormatter: [FilteringTextInputFormatter.digitsOnly, CurrencyInputFormatter()],
               ),
-              /* TextFormFieldWidget(
-                controller: financeInsertController.textControllerValorPoupar,
-                hintText: 'Guardar',
-                keyboardType: TextInputType.number,
-                valid: false,
-                inputFormatter: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  CurrencyInputFormatter()
-                ],
-              ),*/
               Container(
                 width: double.maxFinite,
                 padding: const EdgeInsets.only(left: 20, top: 15),
                 child: const Text(
                   "Data finança",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontSize: 22,
-                      color: Colors.black54),
+                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 22, color: Colors.black54),
                 ),
               ),
               TextFormFieldWidget(
@@ -111,28 +92,29 @@ class FinanceInsertPage extends StatelessWidget {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: GestureDetector(
-                  onTap: () async {
-                    bool result = await financeInsertController
-                        .duplicateFinance(context, finance);
-                    if (result) {
-                      // ignore: use_build_context_synchronously
-                      Navigator.pop(context, true);
-                    }
-                  },
-                  child: Card(
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(
-                          left: 10.0, right: 10.0, top: 3, bottom: 3),
-                      child: Text(
-                        '+ Duplicar finança',
-                        style: TextStyle(fontSize: 14),
+              Visibility(
+                visible: duplicate!,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  child: GestureDetector(
+                    onTap: () async {
+                      bool result = await financeInsertController.duplicateFinance(context, finance);
+                      if (result) {
+                        // ignore: use_build_context_synchronously
+                        Navigator.pop(context, true);
+                      }
+                    },
+                    child: Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 3, bottom: 3),
+                        child: Text(
+                          'Duplicar finança',
+                          style: TextStyle(fontSize: 14),
+                        ),
                       ),
                     ),
                   ),
@@ -148,13 +130,11 @@ class FinanceInsertPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButtonWidget(
-                label: 'CANCELA', onClick: () => Navigator.pop(context, false)),
+            TextButtonWidget(label: 'CANCELA', onClick: () => Navigator.pop(context, false)),
             TextButtonWidget(
               label: finance?.id != null ? 'EDITAR' : 'SALVAR',
               onClick: () async {
-                bool result = await financeInsertController.validateInput(
-                    finance?.id, context);
+                bool result = await financeInsertController.validateInput(finance?.id, context);
                 if (result) {
                   // ignore: use_build_context_synchronously
                   Navigator.pop(context, true);
