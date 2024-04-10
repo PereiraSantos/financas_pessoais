@@ -15,14 +15,10 @@ class Format {
     }
   }
 
-  static String formatDate(DateTime date) =>
-      DateFormat('dd/MM/yyyy').format(date);
+  static String formatDate(DateTime date) => DateFormat('dd/MM/yyyy').format(date);
 
-  static String formatDateWek(String date) => date != ''
-      ? DateFormat("EEEE", "pt_BR")
-          .format(dateParse(date))
-          .replaceAll("-feira", "")
-      : '';
+  static String formatDateWek(String date) =>
+      date != '' ? DateFormat("EEEE", "pt_BR").format(dateParse(date)).replaceAll("-feira", "") : '';
 
   static String formatDateMonth(String date) =>
       date != '' ? DateFormat("MMMM", "pt_BR").format(dateParse(date)) : '';
@@ -36,6 +32,5 @@ class Format {
   static String formatDateStringDayMonth(String date) =>
       date != '' ? DateFormat("dd/MM").format(dateParse(date)) : '';
 
-  static DateTime dateParse(String date) =>
-      DateFormat('dd/MM/yyyy').parse(date);
+  static DateTime dateParse(String date) => DateFormat('dd/MM/yyyy').parse(date);
 }

@@ -1,3 +1,4 @@
+import 'package:financas_pessoais/entities/finance/finance.dart';
 import 'package:flutter/material.dart';
 
 import '../../../usercase/transitions_builder.dart';
@@ -38,9 +39,11 @@ class _FinancePageState extends State<FinancePage> {
           onClickSaveEdit: () => setState(() {})),
       floatingActionButton: GestureDetector(
         onTap: () async {
+          Finance? finance = await FinanceListController().getFinance(null);
+          // ignore: use_build_context_synchronously
           var result = await Navigator.of(context).push(
             TransitionsBuilder.createRoute(
-              FinanceInsertPage(),
+              FinanceInsertPage(duplicate: finance != null ? true : false),
             ),
           );
 

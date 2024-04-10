@@ -155,9 +155,11 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.only(left: 05, top: 10),
                 child: GestureDetector(
                   onTap: () async {
+                    Finance? finance = await findFinanceHomePage();
+                    // ignore: use_build_context_synchronously
                     var result = await Navigator.of(context).push(
                       TransitionsBuilder.createRoute(
-                        FinanceInsertPage(),
+                        FinanceInsertPage(duplicate: finance != null ? true : false),
                       ),
                     );
 
