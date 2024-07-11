@@ -60,16 +60,16 @@ class ListFinance extends StatelessWidget {
                                               TextButton(
                                                 onPressed: () => onClickDelete(snapshot.data![index].id!),
                                                 style: ButtonStyle(
-                                                  side: MaterialStateProperty.all(
+                                                  side: WidgetStateProperty.all(
                                                     const BorderSide(
                                                         width: 2, color: Color.fromARGB(80, 0, 0, 0)),
                                                   ),
-                                                  foregroundColor: MaterialStateProperty.all(
+                                                  foregroundColor: WidgetStateProperty.all(
                                                       const Color.fromARGB(80, 0, 0, 0)),
-                                                  padding: MaterialStateProperty.all(
+                                                  padding: WidgetStateProperty.all(
                                                     const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
                                                   ),
-                                                  textStyle: MaterialStateProperty.all(
+                                                  textStyle: WidgetStateProperty.all(
                                                     const TextStyle(fontSize: 18),
                                                   ),
                                                 ),
@@ -78,16 +78,16 @@ class ListFinance extends StatelessWidget {
                                               TextButton(
                                                 onPressed: () => Navigator.pop(context, false),
                                                 style: ButtonStyle(
-                                                  side: MaterialStateProperty.all(
+                                                  side: WidgetStateProperty.all(
                                                     const BorderSide(
                                                         width: 2, color: Color.fromARGB(80, 0, 0, 0)),
                                                   ),
-                                                  foregroundColor: MaterialStateProperty.all(
+                                                  foregroundColor: WidgetStateProperty.all(
                                                       const Color.fromARGB(80, 0, 0, 0)),
-                                                  padding: MaterialStateProperty.all(
+                                                  padding: WidgetStateProperty.all(
                                                     const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
                                                   ),
-                                                  textStyle: MaterialStateProperty.all(
+                                                  textStyle: WidgetStateProperty.all(
                                                     const TextStyle(fontSize: 18),
                                                   ),
                                                 ),

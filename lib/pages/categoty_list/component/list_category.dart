@@ -26,10 +26,8 @@ class ListCategoriy extends StatelessWidget {
           children: [
             FutureBuilder(
               future: categoryListController.getCategory(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<Category>> snapshot) {
-                if (!snapshot.hasData &&
-                    snapshot.connectionState == ConnectionState.waiting) {
+              builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+                if (!snapshot.hasData && snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
@@ -50,66 +48,45 @@ class ListCategoriy extends StatelessWidget {
                                   return AlertDialog(
                                     content: Text(
                                       "Deseja excluir? \n${snapshot.data![index].description}",
-                                      style: const TextStyle(
-                                          color: Colors.black45, fontSize: 20),
+                                      style: const TextStyle(color: Colors.black45, fontSize: 20),
                                     ),
                                     actions: <Widget>[
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10.0, right: 15.0),
+                                        padding: const EdgeInsets.only(left: 10.0, right: 15.0),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             TextButton(
-                                              onPressed: () => onClickDelete(
-                                                  snapshot.data![index].id!),
+                                              onPressed: () => onClickDelete(snapshot.data![index].id!),
                                               style: ButtonStyle(
-                                                side: MaterialStateProperty.all(
+                                                side: WidgetStateProperty.all(
                                                   const BorderSide(
-                                                      width: 2,
-                                                      color: Color.fromARGB(
-                                                          80, 0, 0, 0)),
+                                                      width: 2, color: Color.fromARGB(80, 0, 0, 0)),
                                                 ),
-                                                foregroundColor:
-                                                    MaterialStateProperty.all(
-                                                        const Color.fromARGB(
-                                                            80, 0, 0, 0)),
-                                                padding:
-                                                    MaterialStateProperty.all(
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10,
-                                                      horizontal: 40),
+                                                foregroundColor: WidgetStateProperty.all(
+                                                    const Color.fromARGB(80, 0, 0, 0)),
+                                                padding: WidgetStateProperty.all(
+                                                  const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
                                                 ),
-                                                textStyle:
-                                                    MaterialStateProperty.all(
+                                                textStyle: WidgetStateProperty.all(
                                                   const TextStyle(fontSize: 18),
                                                 ),
                                               ),
                                               child: const Text("SIM"),
                                             ),
                                             TextButton(
-                                              onPressed: () =>
-                                                  Navigator.pop(context, false),
+                                              onPressed: () => Navigator.pop(context, false),
                                               style: ButtonStyle(
-                                                side: MaterialStateProperty.all(
+                                                side: WidgetStateProperty.all(
                                                   const BorderSide(
-                                                      width: 2,
-                                                      color: Color.fromARGB(
-                                                          80, 0, 0, 0)),
+                                                      width: 2, color: Color.fromARGB(80, 0, 0, 0)),
                                                 ),
-                                                foregroundColor:
-                                                    MaterialStateProperty.all(
-                                                        const Color.fromARGB(
-                                                            80, 0, 0, 0)),
-                                                padding:
-                                                    MaterialStateProperty.all(
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10,
-                                                      horizontal: 40),
+                                                foregroundColor: WidgetStateProperty.all(
+                                                    const Color.fromARGB(80, 0, 0, 0)),
+                                                padding: WidgetStateProperty.all(
+                                                  const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
                                                 ),
-                                                textStyle:
-                                                    MaterialStateProperty.all(
+                                                textStyle: WidgetStateProperty.all(
                                                   const TextStyle(fontSize: 18),
                                                 ),
                                               ),
@@ -127,14 +104,11 @@ class ListCategoriy extends StatelessWidget {
                           },
                           child: Card(
                             elevation: 4,
-                            color: ColorCategory.getColor(
-                                snapshot.data![index].color ?? 0),
+                            color: ColorCategory.getColor(snapshot.data![index].color ?? 0),
                             child: InkWell(
                               onTap: () async {
                                 Category? category =
-                                    await categoryListController
-                                        .getCategoryById(
-                                            snapshot.data![index].id!);
+                                    await categoryListController.getCategoryById(snapshot.data![index].id!);
 
                                 // ignore: use_build_context_synchronously
                                 var result = await Navigator.of(context).push(
@@ -156,17 +130,14 @@ class ListCategoriy extends StatelessWidget {
                                   alignment: Alignment.topLeft,
                                   padding: const EdgeInsets.all(5),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Expanded(
                                         flex: 6,
                                         child: Text(
                                           'Descrição: ${snapshot.data![index].description}',
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.black54),
+                                          style: const TextStyle(fontSize: 18, color: Colors.black54),
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
                                         ),
@@ -174,9 +145,7 @@ class ListCategoriy extends StatelessWidget {
                                       Expanded(
                                         child: Text(
                                           ' ${snapshot.data![index].emoji ?? ''}',
-                                          style: const TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black54),
+                                          style: const TextStyle(fontSize: 16, color: Colors.black54),
                                           textAlign: TextAlign.right,
                                         ),
                                       ),
@@ -195,10 +164,7 @@ class ListCategoriy extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 12.0),
                       child: const Text(
                         "Não há categoria!!!",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black54,
-                            fontWeight: FontWeight.w300),
+                        style: TextStyle(fontSize: 15, color: Colors.black54, fontWeight: FontWeight.w300),
                       ),
                     );
                   }

@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../usercase/showingSections.dart';
+import '../../../usercase/showing_sections.dart';
 
 class GraphicPage extends StatefulWidget {
   const GraphicPage({
@@ -55,40 +55,32 @@ class _GraphicPageState extends State<GraphicPage> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: 22,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.03,
-                                    height: 10,
-                                    color:
-                                        const Color.fromARGB(213, 76, 175, 79),
-                                    padding:
-                                        const EdgeInsets.fromLTRB(2, 2, 2, 2),
-                                  ),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.45,
-                                    height: 22,
-                                    padding:
-                                        const EdgeInsets.fromLTRB(5, 0, 2, 2),
-                                    child: const Text(
-                                      "Receita",
-                                      style: TextStyle(
-                                          color: Colors.black54, fontSize: 18),
-                                    ),
-                                  ),
-                                ],
+                      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 22,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.03,
+                                height: 10,
+                                color: const Color.fromARGB(213, 76, 175, 79),
+                                padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
                               ),
-                            ),
-                            /* SizedBox(
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.45,
+                                height: 22,
+                                padding: const EdgeInsets.fromLTRB(5, 0, 2, 2),
+                                child: const Text(
+                                  "Receita",
+                                  style: TextStyle(color: Colors.black54, fontSize: 18),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        /* SizedBox(
                               width: MediaQuery.of(context).size.width,
                               height: 22,
                               child: Row(
@@ -118,36 +110,30 @@ class _GraphicPageState extends State<GraphicPage> {
                                 ],
                               ),
                             ),*/
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: 22,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.03,
-                                    height: 10,
-                                    color:
-                                        const Color.fromARGB(216, 33, 149, 243),
-                                    padding:
-                                        const EdgeInsets.fromLTRB(2, 2, 2, 2),
-                                  ),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.45,
-                                    height: 22,
-                                    padding:
-                                        const EdgeInsets.fromLTRB(5, 0, 2, 2),
-                                    child: const Text(
-                                      "Saldo atual",
-                                      style: TextStyle(
-                                          color: Colors.black54, fontSize: 18),
-                                    ),
-                                  ),
-                                ],
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 22,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.03,
+                                height: 10,
+                                color: const Color.fromARGB(216, 33, 149, 243),
+                                padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
                               ),
-                            ),
-                          ]),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.45,
+                                height: 22,
+                                padding: const EdgeInsets.fromLTRB(5, 0, 2, 2),
+                                child: const Text(
+                                  "Saldo atual",
+                                  style: TextStyle(color: Colors.black54, fontSize: 18),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ]),
                     ),
                   ),
                   /*Padding(
@@ -193,10 +179,7 @@ class _GraphicPageState extends State<GraphicPage> {
                     ),
                     sectionsSpace: 0,
                     centerSpaceRadius: 40,
-                    sections: Grafico(
-                            poupar: widget.poupar,
-                            sobra: widget.sobra,
-                            total: widget.total)
+                    sections: Grafico(poupar: widget.poupar, sobra: widget.sobra, total: widget.total)
                         .showingSections(),
                   ),
                 ),
